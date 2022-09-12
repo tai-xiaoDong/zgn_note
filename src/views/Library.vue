@@ -1,6 +1,6 @@
 <template>
   <div id="Library">
-    <h1>{{ msg }}</h1>
+    <!-- <h1>{{ msg }}</h1> -->
     <navBar />
   </div>
 </template>
