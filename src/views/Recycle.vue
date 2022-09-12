@@ -5,8 +5,8 @@
   </div>
 </template>
   
-  <script>
-import NavBar from "@/components/navBar.vue";
+<script>
+import NavBar from "@/components/NavBar.vue";
 export default {
   name: "Recycle",
   data() {

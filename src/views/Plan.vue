@@ -6,7 +6,6 @@
 </template>
   
   <script>
-import NavBar from "@/components/navBar.vue";
 export default {
   name: "Plan",
   data() {
@@ -14,6 +13,5 @@ export default {
       msg: "这是计划页面",
     };
   },
-  components: { NavBar },
 };
 </script>
