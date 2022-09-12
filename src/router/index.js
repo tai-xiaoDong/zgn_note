@@ -11,34 +11,45 @@ import NotFound from '@/views/NotFound'
 Vue.use(VueRouter)
 
 const routes = [
+  // 登录
   {
     path: '/',
-    // name: 'Login',
+    name: 'Login',
     component: Login
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  // 设置
+  {
     path: '/setting',
-    // name: 'Setting',
+    name: 'Setting',
     component: Setting
   },
+  // 计划
   {
     path: '/plan',
-    // name: 'Plan',
+    name: 'Plan',
     component: Plan
   },
+  // 回收站
   {
     path: '/recycle',
-    // name: 'Recycle',
+    name: 'Recycle',
     component: Recycle
   },
+  // 文档
   {
     path: '/library',
-    // name: 'Library',
+    name: 'Library',
     component: Library
   },
+  // 404路由
   {
     path: '*',
-    // name: 'NotFound',
+    name: 'NotFound',
     component: NotFound
   },
 ]
