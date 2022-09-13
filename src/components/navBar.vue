@@ -65,7 +65,7 @@ nav {
   max-width: 200px;
   min-height: 100vh;
   background: #e3e6e9;
-  color: #06161b;
+  color: #103b49;
   box-shadow: 0 0 0 3px #e2e5e9;
   > .item {
     > .wrap {
@@ -89,7 +89,6 @@ nav {
 }
 .wrap:hover {
   background: rgb(219, 218, 218);
-  color: #103b49;
   border-radius: 15px;
 }
 </style>

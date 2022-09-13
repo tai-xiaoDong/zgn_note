@@ -1,29 +1,54 @@
 <template>
-  <div id="Login">
-    <div>
-      <div>
-        <h3>注册</h3>
-        <input type="text" placeholder="用户名" />
-        <input type="text" placeholder="密码" />
-        <button>创建账户</button>
-      </div>
-      <h3>登录</h3>
-      <input type="text" placeholder="用户名" />
-      <input type="text" placeholder="密码" />
-      <button>登录</button>
-    </div>
-
-    <router-link to="/library">返回首页</router-link>
+  <div class="wrap">
+    <!-- <Register>注册</Register> -->
+    <Register>
+      <template v-slot:content>登录</template>
+      <template v-slot:nav>
+        <nav>
+          <span>登录</span>
+          <span>注册</span>
+          <router-link to="/library">游客访问</router-link>
+        </nav>
+      </template>
+    </Register>
+    <!-- <Register>
+      <template v-slot:content>注册</template>
+      <template v-slot:nav>
+        <nav>
+          <span>登录</span>
+          <span>注册</span>
+          <router-link to="/library">游客访问</router-link>
+        </nav>
+      </template>
+    </Register> -->
   </div>
 </template>
     
-    <script>
+<script>
+import Register from "@/components/Register.vue";
 export default {
   name: "Login",
-  data() {
-    return {
-      msg: "这是登录页面",
-    };
-  },
+  components: { Register },
 };
 </script>
+
+<style lang="scss" scoped>
+.wrap {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+nav {
+  display: flex;
+  margin-top: 50px;
+
+  > span,
+  a {
+    padding: 0 20px;
+    color: rgb(4, 4, 128);
+  }
+}
+</style>
