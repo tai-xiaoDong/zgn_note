@@ -1,30 +1,33 @@
 <template>
   <div class="wrapper">
-    <div class="form" v-if="isShowLogin">
-      <div class="logo">
-        <img src="@/assets/imgs/logo.jpg" />
+    <transition name="login-ing">
+      <div class="form" v-show="isShowLogin">
+        <div class="logo">
+          <img src="@/assets/imgs/logo.jpg" />
+        </div>
+        <input type="text" placeholder="用户名" v-model="login.username" />
+        <input type="password" placeholder="密码" v-model="login.password" />
+        <button @click="onLogin">登录</button>
+        <nav>
+          <router-link to="/library">游客访问</router-link>
+          <span @click="showRegister">注册</span>
+        </nav>
       </div>
-      <input type="text" placeholder="用户名" v-model="login.username" />
-      <input type="password" placeholder="密码" v-model="login.password" />
-      <button @click="onLogin">登录</button>
-      <nav>
-        <span @click="showRegister">注册</span>
-        <router-link to="/library">游客访问</router-link>
-      </nav>
-    </div>
-
-    <div class="form" v-if="isShowRegister">
-      <div class="logo">
-        <img src="@/assets/imgs/logo.jpg" />
+    </transition>
+    <transition name="register-ing">
+      <div class="form" v-show="isShowRegister">
+        <div class="logo">
+          <img src="@/assets/imgs/logo.jpg" />
+        </div>
+        <input type="text" placeholder="用户名" v-model="register.username" />
+        <input type="password" placeholder="密码" v-model="register.password" />
+        <button @click="onRegister">注册</button>
+        <nav>
+          <router-link to="/library">游客访问</router-link>
+          <span @click="showLogin">登录</span>
+        </nav>
       </div>
-      <input type="text" placeholder="用户名" v-model="register.username" />
-      <input type="password" placeholder="密码" v-model="register.password" />
-      <button @click="onRegister">注册</button>
-      <nav>
-        <span @click="showLogin">登录</span>
-        <router-link to="/library">游客访问</router-link>
-      </nav>
-    </div>
+    </transition>
   </div>
 </template>
     
@@ -153,6 +156,7 @@ export default {
         height: 100px;
       }
     }
+
     > nav {
       display: flex;
       margin-top: 50px;
@@ -163,6 +167,29 @@ export default {
         color: rgb(4, 4, 128);
       }
     }
+  }
+
+  .login-ing-enter-active {
+    transition: all 0.5s ease-in;
+  }
+  .login-ing-enter {
+    transform: translateX(-50px);
+    opacity: 0.5;
+  }
+  .login-ing-leave {
+    display: none;
+  }
+
+  .register-ing-enter-active {
+    transition: all 0.5s ease-in;
+  }
+
+  .register-ing-enter {
+    transform: translateX(50px);
+    opacity: 0.5;
+  }
+  .register-ing-leave {
+    display: none;
   }
 }
 </style>
