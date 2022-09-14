@@ -4,11 +4,10 @@
       <div class="logo">
         <img src="@/assets/imgs/logo.jpg" />
       </div>
-      <input type="text" placeholder="用户名" />
-      <input type="password" placeholder="密码" />
-      <button>登录</button>
+      <input type="text" placeholder="用户名" v-model="login.username" />
+      <input type="password" placeholder="密码" v-model="login.password" />
+      <button @click="onLogin">登录</button>
       <nav>
-        <span @click="showLogin">登录</span>
         <span @click="showRegister">注册</span>
         <router-link to="/library">游客访问</router-link>
       </nav>
@@ -18,12 +17,11 @@
       <div class="logo">
         <img src="@/assets/imgs/logo.jpg" />
       </div>
-      <input type="text" placeholder="用户名" />
-      <input type="password" placeholder="密码" />
-      <button>注册</button>
+      <input type="text" placeholder="用户名" v-model="register.username" />
+      <input type="password" placeholder="密码" v-model="register.password" />
+      <button @click="onRegister">注册</button>
       <nav>
         <span @click="showLogin">登录</span>
-        <span @click="showRegister">注册</span>
         <router-link to="/library">游客访问</router-link>
       </nav>
     </div>
@@ -37,6 +35,19 @@ export default {
     return {
       isShowLogin: true,
       isShowRegister: false,
+      login: {
+        username: "",
+        password: "",
+      },
+      register: {
+        username: "",
+        password: "",
+      },
+      error: {
+        usernameErr: "用户名必须是3-15个字符,仅限字母数字下划线中文",
+        passwordErr: "请输入正确的密码",
+        nullError: "用户名或者密码不能为空",
+      },
     };
   },
   methods: {
@@ -47,6 +58,50 @@ export default {
     showLogin() {
       this.isShowLogin = true;
       this.isShowRegister = false;
+    },
+    onLogin() {
+      let result = this.checkUserName(this.login.username);
+      let result2 = this.checkPassWord(this.login.password);
+      if (!result.isValid) {
+        window.alert(this.error.usernameErr);
+        return;
+      }
+      if (!result2.isValid) {
+        window.alert(this.error.passwordErr);
+        return;
+      }
+      window.alert("登录成功");
+      console.log("账号：", this.login.username, "密码：", this.login.password);
+    },
+    onRegister() {
+      let result = this.checkUserName(this.register.username);
+      let result2 = this.checkPassWord(this.register.password);
+      if (!result.isValid) {
+        window.alert(this.error.usernameErr);
+        return;
+      }
+      if (!result2.isValid) {
+        window.alert(this.error.passwordErr);
+        return;
+      }
+      window.alert("注册成功");
+      console.log(
+        "账号：",
+        this.register.username,
+        "密码：",
+        this.register.password
+      );
+    },
+    checkUserName(username) {
+      return {
+        isValid: /^[a-zA-Z_0-9\u4e00-\u9fa5]{2,15}$/.test(username),
+        isError: "用户名必须是3-15个字符,仅限字母数字下划线中文",
+      };
+    },
+    checkPassWord(password) {
+      return {
+        isValid: /^.{6,16}$/.test(password),
+      };
     },
   },
 };
