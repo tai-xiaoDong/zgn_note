@@ -1,8 +1,12 @@
 <template>
   <nav>
+    <router-link to="/library" class="logo">
+      <img src="@/assets/imgs/logo.jpg" />
+      <div></div>
+    </router-link>
     <router-link to="/library" class="item">
       <div class="wrap">
-        <svg class="a">
+        <svg>
           <use xlink:href="#library"></use>
         </svg>
         <div class="txt">文件夹</div>
@@ -10,7 +14,7 @@
     </router-link>
     <router-link to="/recycle" class="item">
       <div class="wrap">
-        <svg class="a">
+        <svg>
           <use xlink:href="#recycle"></use>
         </svg>
         <div class="txt">回收站</div>
@@ -18,7 +22,7 @@
     </router-link>
     <router-link to="/plan" class="item">
       <div class="wrap">
-        <svg class="a">
+        <svg>
           <use xlink:href="#plan"></use>
         </svg>
         <div class="txt">计划</div>
@@ -26,7 +30,7 @@
     </router-link>
     <router-link to="/setting" class="item">
       <div class="wrap">
-        <svg class="a">
+        <svg>
           <use xlink:href="#setting"></use>
         </svg>
         <div class="txt">设置</div>
@@ -34,7 +38,7 @@
     </router-link>
     <router-link to="/login" class="item">
       <div class="wrap">
-        <svg class="a">
+        <svg>
           <use xlink:href="#login"></use>
         </svg>
         <div class="txt">登录</div>
@@ -55,10 +59,9 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
 nav {
-  display: flex;
+  display: Flex;
   flex-direction: column;
   justify-content: center;
   font-size: 18px;
@@ -67,7 +70,11 @@ nav {
   background: #e3e6e9;
   color: #103b49;
   box-shadow: 0 0 0 3px #e2e5e9;
+  position: relative;
   > .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     > .wrap {
       display: flex;
       flex-direction: row;
@@ -81,12 +88,25 @@ nav {
         height: 20px;
       }
       > .txt {
-        /* width: 0px; */
         margin-top: 20px;
       }
     }
   }
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    left: 60px;
+    top: 60px;
+    > img {
+      width: 80px;
+      height: 80px;
+    }
+  }
 }
+
 .wrap:hover {
   background: rgb(219, 218, 218);
   border-radius: 15px;

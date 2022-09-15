@@ -169,27 +169,28 @@ export default {
     }
   }
 
-  .login-ing-enter-active {
+  .login-ing-enter-active,
+  .register-ing-enter-active {
     transition: all 0.5s ease-in;
   }
   .login-ing-enter {
     transform: translateX(-50px);
     opacity: 0.5;
   }
-  .login-ing-leave {
+  .login-ing-leave,
+  .register-ing-leave {
     display: none;
   }
 
-  .register-ing-enter-active {
+  /* {
     transition: all 0.5s ease-in;
-  }
-
+  } */
   .register-ing-enter {
     transform: translateX(50px);
     opacity: 0.5;
   }
-  .register-ing-leave {
+  /* {
     display: none;
-  }
+  } */
 }
 </style>
