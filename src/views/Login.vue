@@ -156,7 +156,6 @@ export default {
         height: 100px;
       }
     }
-
     > nav {
       display: flex;
       margin-top: 50px;
@@ -181,16 +180,9 @@ export default {
   .register-ing-leave {
     display: none;
   }
-
-  /* {
-    transition: all 0.5s ease-in;
-  } */
   .register-ing-enter {
     transform: translateX(50px);
     opacity: 0.5;
   }
-  /* {
-    display: none;
-  } */
 }
 </style>
