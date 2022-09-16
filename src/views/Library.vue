@@ -1,6 +1,5 @@
 <template>
-  <div id="Library">
-    <!-- <h1>{{ msg }}</h1> -->
+  <div class="Library">
     <navBar />
   </div>
 </template>
@@ -15,3 +14,6 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+</style>
