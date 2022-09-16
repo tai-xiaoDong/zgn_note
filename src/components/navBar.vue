@@ -244,7 +244,7 @@ export default {
     .logo {
       flex-direction: column;
       position: absolute;
-      left: 10px;
+      left: 22px;
       top: 60px;
       > img {
         width: 60px;
