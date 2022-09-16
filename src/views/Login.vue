@@ -117,6 +117,7 @@ export default {
   align-items: center;
   height: 100vh;
   width: 100vw;
+
   > .form {
     display: flex;
     justify-content: center;
@@ -126,7 +127,7 @@ export default {
     min-width: 400px;
     background: white;
     border-radius: 10px;
-    box-shadow: 2px 2px 3px 3px #7a7e80;
+    box-shadow: 2px 2px 3px 3px gray;
     > input,
     button {
       display: block;

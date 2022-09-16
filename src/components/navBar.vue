@@ -94,16 +94,17 @@ export default {
   flex-direction: column;
   justify-content: center;
   font-size: 18px;
-  max-width: 200px;
+  width: 200px;
   min-height: 100vh;
   background: #e3e6e9;
   color: #103b49;
-  box-shadow: 2px 0px 2px 3px #e2e5e9;
+  box-shadow: 2px 0px 2px 2px rgb(204, 202, 202);
   position: relative;
   > div {
     > .selected {
       background: rgb(219, 218, 218);
       border-radius: 15px;
+      box-shadow: 2px 2px 1px 1px gray;
     }
     > .item {
       display: flex;
@@ -149,6 +150,7 @@ export default {
       .wrapper:hover {
         background: rgb(219, 218, 218);
         border-radius: 15px;
+        box-shadow: 2px 2px 1px 1px gray;
       }
     }
 
@@ -187,12 +189,13 @@ export default {
   min-height: 100vh;
   background: #e3e6e9;
   color: #103b49;
-  box-shadow: 2px 0px 2px 3px #e2e5e9;
+  box-shadow: 2px 0px 2px 2px rgb(204, 202, 202);
   position: relative;
   > div {
     > .selected {
       background: rgb(219, 218, 218);
       border-radius: 15px;
+      box-shadow: 2px 2px 1px 1px gray;
     }
     > .item {
       display: flex;
@@ -211,9 +214,9 @@ export default {
         > svg {
           fill: currentColor;
           margin: 20px;
-          margin-left: 28px;
-          width: 23px;
-          height: 23px;
+          margin-left: 25px;
+          width: 25px;
+          height: 25px;
         }
         > .txt {
           display: none;
@@ -226,9 +229,9 @@ export default {
         > svg {
           fill: currentColor;
           margin: 20px;
-          margin-left: 30px;
-          width: 20px;
-          height: 20px;
+          margin-left: 25px;
+          width: 23px;
+          height: 23px;
         }
         > .txt {
           display: none;
@@ -238,6 +241,7 @@ export default {
       .wrapper:hover {
         background: rgb(219, 218, 218);
         border-radius: 15px;
+        box-shadow: 2px 2px 1px 1px gray;
       }
     }
 
