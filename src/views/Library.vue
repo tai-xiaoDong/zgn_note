@@ -36,9 +36,8 @@ export default {
 .Library {
   display: flex;
   > .showed {
-    background: #f2f5f8;
     color: #103b49;
-    box-shadow: 2px 0px 2px 2px rgb(204, 202, 202);
+    border-right: 1px solid gray;
     height: 100vh;
     width: 340px;
     margin-left: 5px;
@@ -57,7 +56,6 @@ export default {
   > main {
     max-width: 1300px;
     height: 100vh;
-    border: 1px solid red;
   }
 }
 </style>

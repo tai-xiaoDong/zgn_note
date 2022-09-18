@@ -1,6 +1,5 @@
 <template>
   <div id="Plan">
-    <h1>{{ msg }}</h1>
     <NavBar />
   </div>
 </template>

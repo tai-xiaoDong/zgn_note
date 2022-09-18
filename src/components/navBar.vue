@@ -94,17 +94,18 @@ export default {
   flex-direction: column;
   justify-content: center;
   font-size: 18px;
-  width: 200px;
+  width: 170px;
   min-height: 100vh;
-  background: #e3e6e9;
+  background: rgb(240, 241, 245);
   color: #103b49;
-  box-shadow: 2px 0px 2px 2px rgb(204, 202, 202);
+  box-shadow: 2px 1px 1px 1px rgb(221, 216, 216);
   position: relative;
   > div {
     > .selected {
-      background: rgb(219, 218, 218);
-      border-radius: 15px;
-      box-shadow: 2px 2px 1px 1px gray;
+      background: rgb(61, 63, 65);
+      border-radius: 10px;
+      color: rgb(238, 234, 234);
+      box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
     }
     > .item {
       display: flex;
@@ -115,7 +116,7 @@ export default {
       > .wrapper {
         display: flex;
         flex-direction: row;
-        max-width: 180px;
+        max-width: 150px;
         > .small {
           display: none;
         }
@@ -130,7 +131,6 @@ export default {
           margin-top: 23px;
         }
       }
-
       > .wrap {
         display: flex;
         flex-direction: row;
@@ -148,9 +148,8 @@ export default {
       }
       .wrap:hover,
       .wrapper:hover {
-        background: rgb(219, 218, 218);
-        border-radius: 15px;
-        box-shadow: 2px 2px 1px 1px gray;
+        border-radius: 10px;
+        box-shadow: 1px 1px 2px 2px gray;
       }
     }
 
@@ -185,17 +184,19 @@ export default {
   flex-direction: column;
   justify-content: center;
   font-size: 18px;
-  max-width: 100px;
+  max-width: 90px;
   min-height: 100vh;
-  background: #e3e6e9;
   color: #103b49;
-  box-shadow: 2px 0px 2px 2px rgb(204, 202, 202);
+  box-shadow: 2px 1px 1px 1px rgb(221, 216, 216);
+  background: rgb(240, 241, 245);
   position: relative;
+
   > div {
     > .selected {
-      background: rgb(219, 218, 218);
-      border-radius: 15px;
-      box-shadow: 2px 2px 1px 1px gray;
+      background: rgb(61, 63, 65);
+      border-radius: 10px;
+      color: rgb(238, 234, 234);
+      box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
     }
     > .item {
       display: flex;
@@ -239,9 +240,8 @@ export default {
       }
       .wrap:hover,
       .wrapper:hover {
-        background: rgb(219, 218, 218);
-        border-radius: 15px;
-        box-shadow: 2px 2px 1px 1px gray;
+        border-radius: 10px;
+        box-shadow: 1px 1px 2px 2px gray;
       }
     }
 

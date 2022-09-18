@@ -1,6 +1,5 @@
 <template>
   <div id="Recycle">
-    <h1>{{ msg }}</h1>
     <NavBar />
   </div>
 </template>
