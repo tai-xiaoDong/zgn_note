@@ -50,7 +50,7 @@
                     <div class="small txt">展开</div>
                 </div>
             </div>
-            <div class="loginOut" @click="loginOut">
+            <div class="logout" @click="logout">
                 <div class="wrapper">
                     <svg>
                         <use xlink:href="#login"></use>
@@ -71,7 +71,6 @@ import e from "@/assets/icons/recycle.svg";
 import f from "@/assets/icons/wide.svg";
 import g from "@/assets/icons/narrow.svg";
 import request from "@/helpers/request";
-import router from "@/router";
 
 export default {
     name: "NavBar",
@@ -86,7 +85,7 @@ export default {
         navChange2() {
             this.change = "wide";
         },
-        loginOut() {
+        logout() {
             request("/auth/logout").then((data) => {
                 console.log(data);
             });
@@ -116,7 +115,7 @@ export default {
             box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
         }
         > .item,
-        .loginOut {
+        .logout {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -208,7 +207,7 @@ export default {
             box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
         }
         > .item,
-        .loginOut {
+        .logout {
             display: flex;
             flex-direction: column;
             justify-content: center;

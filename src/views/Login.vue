@@ -49,8 +49,13 @@
 </template>
     
 <script>
-import request from "@/helpers/request";
-import router from "@/router";
+import Auth from "@/apis/auth";
+
+//检查是否登录
+Auth.getInfo().then((data) => {
+    console.log(data);
+});
+
 export default {
     name: "Login",
     data() {
@@ -92,20 +97,21 @@ export default {
                 window.alert(this.error.passwordErr);
                 return;
             }
-            window.alert("登录成功");
+
             console.log(
                 "账号：",
                 this.login.username,
                 "密码：",
                 this.login.password
             );
-            request("/auth/login", "post", {
-                username: this.login.username,
-                password: this.login.password,
+            Auth.login({
+                username: this.username,
+                password: this.password,
             }).then((data) => {
                 console.log(data);
+                window.alert("登录成功");
+                this.$router.push("/library");
             });
-            this.$router.push("/library");
         },
         onRegister() {
             let result = this.checkUserName(this.register.username);
@@ -125,9 +131,9 @@ export default {
                 "密码：",
                 this.register.password
             );
-            request("/auth/register", "post", {
-                username: this.register.username,
-                password: this.register.password,
+            Auth.register({
+                username: this.username,
+                password: this.password,
             }).then((data) => {
                 console.log(data);
             });
