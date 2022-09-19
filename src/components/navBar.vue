@@ -37,21 +37,22 @@
                 </div>
             </router-link>
             <div class="item">
-                <div class="wrapper" @click="navChange1">
+                <div class="rim" @click="navChange1">
                     <svg class="big">
                         <use xlink:href="#narrow"></use>
                     </svg>
-                    <div class="big txt">收起</div>
+                    <div class="txt">收起</div>
                 </div>
-                <div class="wrapper" @click="navChange2">
+            </div>
+            <div class="item">
+                <div class="rim2" @click="navChange2">
                     <svg class="small">
                         <use xlink:href="#wide"></use>
                     </svg>
-                    <div class="small txt">展开</div>
                 </div>
             </div>
             <div class="logout" @click="logout">
-                <div class="wrapper">
+                <div class="wrap">
                     <svg>
                         <use xlink:href="#login"></use>
                     </svg>
@@ -96,90 +97,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wide {
+.wide,
+.narrow {
     display: Flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 18px;
-    width: 170px;
-    min-height: 100vh;
-    background: rgb(240, 241, 245);
-    color: #103b49;
-    box-shadow: 2px 1px 1px 1px rgb(221, 216, 216);
-    position: relative;
+    color: rgb(42, 49, 59);
+    margin: 10px;
+    margin-top: 40px;
     > div {
+        min-height: 90vh;
+        box-shadow: 0px 2px 4px 1px rgb(155, 154, 154);
+        border-radius: 20px;
         > .selected {
-            background: rgb(61, 63, 65);
+            background: rgb(59, 85, 71);
             border-radius: 10px;
-            color: rgb(238, 234, 234);
+            color: rgb(223, 217, 217);
             box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
         }
         > .item,
-        .logout {
+        .logout,
+        .logo {
             display: flex;
             flex-direction: column;
             justify-content: center;
             margin: 0 10px;
             margin-bottom: 10px;
-            > .wrapper {
+            > .wrap,
+            .rim,
+            .rim2 {
                 display: flex;
                 flex-direction: row;
-                max-width: 150px;
-                > .small {
-                    display: none;
-                }
-                > svg {
-                    fill: currentColor;
-                    margin: 20px;
-                    margin-left: 28px;
-                    width: 25px;
-                    height: 25px;
-                }
-                > .txt {
-                    margin-top: 23px;
-                }
-            }
-            > .wrap {
-                display: flex;
-                flex-direction: row;
-                max-width: 180px;
+                font-size: 16px;
                 > svg {
                     fill: currentColor;
                     margin: 20px;
                     margin-left: 30px;
-                    width: 23px;
-                    height: 23px;
-                }
-                > .txt {
-                    margin-top: 20px;
+                    min-width: 23px;
+                    min-height: 23px;
+                    max-width: 23px;
+                    max-height: 23px;
                 }
             }
             .wrap:hover,
-            .wrapper:hover {
+            .wrapper:hover,
+            .rim:hover,
+            .rim2:hover {
                 border-radius: 10px;
                 box-shadow: 1px 1px 2px 2px gray;
             }
         }
-
         .logo {
-            flex-direction: column;
-            position: absolute;
-            left: 60px;
-            top: 60px;
-            > div {
-                position: relative;
-                > .wid {
-                    fill: currentColor;
-                    width: 30px;
-                    height: 30px;
-                    position: absolute;
-                    top: 120px;
-                    left: 100px;
-                }
-                > .nar {
-                    display: none;
-                }
-            }
             > img {
                 width: 60px;
                 height: 60px;
@@ -187,81 +155,78 @@ export default {
         }
     }
 }
-.narrow {
-    display: Flex;
-    flex-direction: column;
-    justify-content: center;
-    font-size: 18px;
-    max-width: 90px;
-    min-height: 100vh;
-    color: #103b49;
-    box-shadow: 2px 1px 1px 1px rgb(221, 216, 216);
-    background: rgb(240, 241, 245);
-    position: relative;
-
+.wide {
+    min-width: 170px;
+    max-width: 170px;
     > div {
-        > .selected {
-            background: rgb(61, 63, 65);
-            border-radius: 10px;
-            color: rgb(238, 234, 234);
-            box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
-        }
         > .item,
-        .logout {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin: 0 10px;
-            margin-bottom: 10px;
-            > .wrapper {
+        .logout,
+        .logo {
+            > .rim {
                 display: flex;
-                flex-direction: row;
-                max-width: 180px;
-                margin-bottom: 5px;
                 > .big {
-                    display: none;
-                }
-                > svg {
                     fill: currentColor;
                     margin: 20px;
-                    margin-left: 25px;
-                    width: 25px;
-                    height: 25px;
+                    margin-left: 30px;
                 }
                 > .txt {
-                    display: none;
-                }
-            }
-            > .wrap {
-                display: flex;
-                flex-direction: row;
-                max-width: 180px;
-                > svg {
-                    fill: currentColor;
-                    margin: 20px;
-                    margin-left: 25px;
-                    width: 23px;
+                    margin-top: 22px;
                     height: 23px;
                 }
+            }
+            > .rim2 {
+                display: none;
+            }
+            > .wrap {
+                max-width: 180px;
                 > .txt {
+                    margin-top: 22px;
+                    height: 23px;
+                }
+                .small {
                     display: none;
                 }
             }
-            .wrap:hover,
-            .wrapper:hover {
-                border-radius: 10px;
-                box-shadow: 1px 1px 2px 2px gray;
+        }
+        .logo {
+            > img {
+                margin: 50px;
+                margin-bottom: 150px;
             }
         }
-
+    }
+}
+.narrow {
+    min-width: 90px;
+    max-width: 90px;
+    > div {
+        > .item,
+        .logout,
         .logo {
-            flex-direction: column;
-            position: absolute;
-            left: 22px;
-            top: 60px;
+            > .rim {
+                display: none;
+            }
+            > .rim2 {
+                > svg {
+                    fill: currentColor;
+                    margin-left: 25px;
+                }
+            }
+
+            > .wrap {
+                > .txt {
+                    display: none;
+                }
+                > svg {
+                    margin-left: 25px;
+                }
+            }
+        }
+        .logo {
             > img {
-                width: 60px;
-                height: 60px;
+                margin: 50px;
+                margin-left: 8px;
+                margin-bottom: 150px;
             }
         }
     }
