@@ -7,6 +7,7 @@
                     placeholder="请在此输入文件名"
                     class="content"
                     v-model="value"
+                    :promptValue="value"
                 />
                 <div class="echo">
                     <div class="yes"><slot name="yes"></slot></div>
