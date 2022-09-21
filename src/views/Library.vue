@@ -3,27 +3,39 @@
         <navBar />
         <div class="doc">
             <section>
-                <div>
+                <div class="wrap">
                     <div class="title">
-                        <strong>一、今天吃什么</strong>
-                        <div>删除</div>
+                        <div>今天吃什么</div>
                     </div>
-                    <div class="content">1.米饭</div>
-                    <div class="content">2.蔬菜</div>
+                    <div class="delete">删除</div>
+                </div>
+                <div class="content">
+                    <div>米饭</div>
                 </div>
             </section>
             <main>
+                <header>
+                    <div class="date">创建时间：2022-9-19</div>
+                    <div class="control">
+                        <div class="edit">
+                            <svg>
+                                <use xlink:href="#edit" />
+                            </svg>
+                        </div>
+                        <div class="delete">
+                            <svg>
+                                <use xlink:href="#delete" />
+                            </svg>
+                        </div>
+                    </div>
+                </header>
                 <div>
-                    <div>创建时间：2022-9-19</div>
-                    <div>编辑</div>
-                    <div>删除</div>
+                    <div class="title">
+                        <h1>一、今天吃什么</h1>
+                    </div>
+                    <div class="small-title">1.米饭</div>
+                    <div class="content">这里显示文章内容</div>
                 </div>
-                <hr />
-                <div class="title">
-                    <h1>一、今天吃什么</h1>
-                </div>
-                <div class="title">1.米饭</div>
-                <div class="content">这里显示文章内容</div>
             </main>
             <div class="user">
                 <Avatar />
@@ -36,6 +48,9 @@
 <script>
 import NewNote from "../components/NewNote.vue";
 import Avatar from "@/components/Avatar.vue";
+import a from "@/assets/icons/library/delete.svg";
+import b from "@/assets/icons/library/edit.svg";
+
 export default {
     name: "Library",
     data() {
@@ -60,41 +75,72 @@ export default {
             overflow: hidden;
             padding: 10px;
             margin-right: 10px;
-            margin-left: 20px;
-            > div {
+            > .wrap {
                 border-right: 1px solid rgb(221, 218, 218);
                 margin-top: 20px;
+                display: flex;
                 > .title {
                     padding: 10px;
                     border-radius: 10px;
-                    color: rgb(156, 86, 64);
                     margin-right: 10px;
+                    display: flex;
                 }
-                > .content {
-                    font-size: 14px;
-                    color: rgb(40, 74, 155);
-                    white-space: pre-wrap;
-                    margin-top: 5px;
+                .delete {
+                    color: rgb(224, 65, 17);
                     padding: 10px;
-                    padding-left: 30px;
-                    border-radius: 10px;
-                    margin-right: 10px;
+                    white-space: nowrap;
                 }
-                .title:hover,
-                .content:hover {
-                    border-radius: 10px;
-                    box-shadow: 0px 2px 2px 1px rgb(42, 49, 59);
+            }
+            > .content {
+                display: flex;
+                white-space: pre-wrap;
+                padding-left: 15px;
+                margin-right: 10px;
+                color: rgb(40, 74, 155);
+                > div {
+                    padding: 5px;
+                    margin-left: 10px;
                 }
             }
         }
         > main {
-            padding-top: 30px;
-            max-width: 1000px;
-            min-width: 750px;
-            padding: 30px;
-            > .title {
+            header {
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid black;
+                padding: 0px;
                 margin-top: 30px;
-                margin-bottom: 20px;
+                padding: 10px;
+                .control {
+                    display: flex;
+                    > .edit {
+                        margin-right: 20px;
+                        > svg {
+                            width: 24px;
+                            height: 24px;
+                        }
+                    }
+                    > .delete {
+                        color: rgb(224, 65, 17);
+                        > svg {
+                            width: 24px;
+                            height: 24px;
+                            fill: rgb(224, 65, 17);
+                        }
+                    }
+                }
+            }
+
+            > div {
+                max-width: 1000px;
+                min-width: 750px;
+                padding: 30px;
+                > .title {
+                    margin-bottom: 30px;
+                }
+                > .small-title {
+                    margin-bottom: 20px;
+                }
             }
         }
         > .user {

@@ -30,25 +30,26 @@ export default {
     font-size: 16px;
     max-width: 250px;
     border-radius: 10px;
-    color: rgb(59, 85, 71);
+    color: rgb(73, 116, 94);
     box-shadow: 0px 4px 4px 0px rgb(196, 194, 194);
 
     > .newNote,
     .newWord {
         display: flex;
         flex-direction: row;
+        font-size: 14px;
         margin: 10px;
         padding-bottom: 5px;
         padding-top: 5px;
         > svg {
-            width: 1em;
-            height: 1em;
+            width: 25px;
+            height: 25px;
             margin: 5px;
             fill: rgb(59, 85, 71);
         }
         > .txt {
             margin-bottom: 5px;
-            margin-top: 5px;
+            margin-top: 10px;
             margin-right: 5px;
         }
     }
