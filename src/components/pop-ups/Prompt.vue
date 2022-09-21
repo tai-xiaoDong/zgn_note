@@ -43,7 +43,7 @@ export default {
     width: 500px;
     height: 110px;
     padding: 10px;
-    position: absolute;
+    position: relative;
     left: 40%;
     top: 2%;
     background: white;
