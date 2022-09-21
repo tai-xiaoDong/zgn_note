@@ -4,23 +4,24 @@
         <div class="doc">
             <section>
                 <div>
-                    <div class="title"><strong>一、今天吃什么</strong></div>
+                    <div class="title">
+                        <strong>一、今天吃什么</strong>
+                        <div>删除</div>
+                    </div>
                     <div class="content">1.米饭</div>
                     <div class="content">2.蔬菜</div>
                 </div>
-                <div>
-                    <div class="title"><strong>一、今天吃什么</strong></div>
-                    <div class="content">1.米饭</div>
-                </div>
-                <div>
-                    <div class="title"><strong>一、今天吃什么</strong></div>
-                    <div class="content">1.米饭</div>
-                </div>
             </section>
             <main>
-                <div>创建时间：2022-9-19</div>
+                <div>
+                    <div>创建时间：2022-9-19</div>
+                    <div>编辑</div>
+                    <div>删除</div>
+                </div>
                 <hr />
-                <div class="title"><h1>一、今天吃什么</h1></div>
+                <div class="title">
+                    <h1>一、今天吃什么</h1>
+                </div>
                 <div class="title">1.米饭</div>
                 <div class="content">这里显示文章内容</div>
             </main>
@@ -62,10 +63,12 @@ export default {
             margin-left: 20px;
             > div {
                 border-right: 1px solid rgb(221, 218, 218);
+                margin-top: 20px;
                 > .title {
                     padding: 10px;
                     border-radius: 10px;
                     color: rgb(156, 86, 64);
+                    margin-right: 10px;
                 }
                 > .content {
                     font-size: 14px;
@@ -75,6 +78,7 @@ export default {
                     padding: 10px;
                     padding-left: 30px;
                     border-radius: 10px;
+                    margin-right: 10px;
                 }
                 .title:hover,
                 .content:hover {
