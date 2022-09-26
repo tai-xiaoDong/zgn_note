@@ -1,7 +1,7 @@
 <template>
     <nav :class="change">
-        <div>
-            <router-link to="/library" class="logo">
+        <div class="navbar">
+            <router-link to="/" class="logo">
                 <img src="@/assets/imgs/logo.jpg" />
             </router-link>
             <router-link to="/library" class="item" active-class="selected">
@@ -60,6 +60,14 @@
                 </div>
             </div>
         </div>
+        <Confirm :message="message" v-show="showMessage">
+            <template v-slot:yes>
+                <div @click="isLogout">确定</div>
+            </template>
+            <template v-slot:no>
+                <div @click="noLogout">取消</div>
+            </template>
+        </Confirm>
     </nav>
 </template>
 
@@ -72,13 +80,18 @@ import e from "@/assets/icons/recycle.svg";
 import f from "@/assets/icons/wide.svg";
 import g from "@/assets/icons/narrow.svg";
 import request from "@/helpers/request";
+import Confirm from "@/components/pop-ups/Confirm.vue";
 
 export default {
     name: "NavBar",
     data() {
-        return { change: "wide" };
+        return {
+            change: "narrow",
+            message: "确认注销？",
+            showMessage: false,
+        };
     },
-
+    components: { Confirm },
     methods: {
         navChange1() {
             this.change = "narrow";
@@ -87,10 +100,14 @@ export default {
             this.change = "wide";
         },
         logout() {
-            request("/auth/logout").then((data) => {
-                console.log(data);
-            });
+            this.showMessage = true;
+        },
+        isLogout() {
+            localStorage.setItem("token", "");
             this.$router.push("/login");
+        },
+        noLogout() {
+            this.showMessage = false;
         },
     },
 };
@@ -103,12 +120,9 @@ export default {
     flex-direction: column;
     justify-content: center;
     color: rgb(42, 49, 59);
-    margin: 10px;
-    margin-top: 40px;
-    > div {
-        min-height: 90vh;
+    > .navbar {
+        height: 100vh;
         box-shadow: 0px 2px 4px 1px rgb(155, 154, 154);
-        border-radius: 20px;
         > .selected {
             background: rgb(59, 85, 71);
             border-radius: 10px;
@@ -158,7 +172,7 @@ export default {
 .wide {
     min-width: 170px;
     max-width: 170px;
-    > div {
+    > .navbar {
         > .item,
         .logout,
         .logo {
@@ -199,7 +213,7 @@ export default {
 .narrow {
     min-width: 90px;
     max-width: 90px;
-    > div {
+    > .navbar {
         > .item,
         .logout,
         .logo {

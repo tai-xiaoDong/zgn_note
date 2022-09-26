@@ -19,11 +19,7 @@ export default {
             request(url.login, "post", { username, password })
         );
     },
-    logout() {
-        return (
-            request(url.logout)
-        );
-    },
+
     getInfo() {
         return (
             request(url.get_info)
