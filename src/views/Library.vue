@@ -50,6 +50,16 @@ import NewNote from "../components/NewNote.vue";
 import Avatar from "@/components/Avatar.vue";
 import a from "@/assets/icons/library/delete.svg";
 import b from "@/assets/icons/library/edit.svg";
+import Auth from "@/apis/auth";
+
+//检查是否登录
+Auth.getInfo()
+    .then((data) => {
+        console.log(data);
+    })
+    .catch((data) => {
+        this.$router.push("/login");
+    });
 
 export default {
     name: "Library",
@@ -75,6 +85,7 @@ export default {
             overflow: hidden;
             padding: 10px;
             margin-right: 10px;
+            margin-left: 20px;
             > .wrap {
                 border-right: 1px solid rgb(221, 218, 218);
                 margin-top: 20px;
