@@ -17,7 +17,7 @@
                 />
                 <button @click="onLogin">登录</button>
                 <nav>
-                    <router-link to="/library">游客访问</router-link>
+                    <router-link to="/">游客访问</router-link>
                     <span @click="showRegister">注册</span>
                 </nav>
             </div>
@@ -50,11 +50,8 @@
     
 <script>
 import Auth from "@/apis/auth";
-
-//检查是否登录
-Auth.getInfo().then((data) => {
-    console.log(data);
-});
+import axios from "axios";
+import request from "@/helpers/request";
 
 export default {
     name: "Login",
@@ -105,13 +102,18 @@ export default {
                 this.login.password
             );
             Auth.login({
-                username: this.username,
-                password: this.password,
-            }).then((data) => {
-                console.log(data);
-                window.alert("登录成功");
-                this.$router.push("/library");
-            });
+                username: this.login.username,
+                password: this.login.password,
+            })
+                .then((data) => {
+                    window.alert("登录成功");
+                    localStorage.setItem("token", data);
+                    this.$router.push("/");
+                })
+                .catch((data) => {
+                    console.log(data);
+                    window.alert("请输入正确的账号密码");
+                });
         },
         onRegister() {
             let result = this.checkUserName(this.register.username);
@@ -124,7 +126,6 @@ export default {
                 window.alert(this.error.passwordErr);
                 return;
             }
-            window.alert("注册成功");
             console.log(
                 "账号：",
                 this.register.username,
@@ -132,12 +133,14 @@ export default {
                 this.register.password
             );
             Auth.register({
-                username: this.username,
-                password: this.password,
+                username: this.register.username,
+                password: this.register.password,
             }).then((data) => {
                 console.log(data);
+                window.alert("注册成功");
+                localStorage.setItem("token", data);
+                this.$router.push("/");
             });
-            this.$router.push("/library");
         },
         checkUserName(username) {
             return {
