@@ -6,6 +6,7 @@ import Recycle from '@/views/Recycle'
 import Plan from '@/views/Plan'
 import Login from '@/views/Login'
 import NotFound from '@/views/NotFound'
+import Edit from '@/views/Edit.vue'
 
 
 Vue.use(VueRouter)
@@ -14,8 +15,13 @@ const routes = [
   // 登录
   {
     path: '/',
-    name: 'Login',
-    component: Login
+    name: 'Library',
+    component: Library
+  },
+  {
+    path: '/library',
+    name: 'Library',
+    component: Library
   },
   {
     path: '/login',
@@ -40,11 +46,10 @@ const routes = [
     name: 'Recycle',
     component: Recycle
   },
-  // 文档
   {
-    path: '/library',
-    name: 'Library',
-    component: Library
+    path: '/edit',
+    name: 'Edit',
+    component: Edit
   },
   // 404路由
   {
