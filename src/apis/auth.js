@@ -4,7 +4,6 @@ import request from "@/helpers/request";
 const url = {
     register: '/auth/register',
     login: '/auth/login',
-    logout: '/auth/logout',
     get_info: '/auth',
 };
 
