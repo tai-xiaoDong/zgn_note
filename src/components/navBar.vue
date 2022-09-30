@@ -2,7 +2,7 @@
     <nav :class="change">
         <div class="navbar">
             <router-link to="/" class="logo">
-                <img src="@/assets/imgs/logo.jpg" />
+                <img src="@/assets/imgs/logo.png" />
             </router-link>
             <router-link to="/library" class="item" active-class="selected">
                 <div class="wrap">

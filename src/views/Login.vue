@@ -3,7 +3,7 @@
         <transition name="login-ing">
             <div class="form" v-show="isShowLogin">
                 <div class="logo">
-                    <img src="@/assets/imgs/logo.jpg" />
+                    <img src="@/assets/imgs/logo.png" />
                 </div>
                 <input
                     type="text"
@@ -26,7 +26,7 @@
         <transition name="register-ing">
             <div class="form" v-show="isShowRegister">
                 <div class="logo">
-                    <img src="@/assets/imgs/logo.jpg" />
+                    <img src="@/assets/imgs/logo.png" />
                 </div>
                 <input
                     type="text"
@@ -107,6 +107,7 @@ export default {
             })
                 .then((data) => {
                     window.alert("登录成功");
+                    console.log(data);
                     localStorage.setItem("token", data);
                     this.$router.push("/");
                 })
