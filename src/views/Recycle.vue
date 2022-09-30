@@ -17,8 +17,21 @@
 </template>
   
 <script>
+import auth from '@/apis/auth';
+
 export default {
     name: "Recycle",
+    created() {
+        //检查是否登录
+        auth.getInfo()
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((data) => {
+                console.log(data)
+                this.$router.push("/login");
+            });
+    },
 };
 </script>
 
