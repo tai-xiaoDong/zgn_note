@@ -1,20 +1,40 @@
 <template>
-    <div :title="user.username" class="user">
+    <div class="user" @click="onSetting">
         <div class="photo">{{ portrait }}</div>
-        <div class="name">{{ user.username }}</div>
-        <div class="sign">简介：喜欢茹茹</div>
+        <div class="name">{{ username }}</div>
+        <div class="sign">简介：{{ sign }}</div>
     </div>
 </template>
 
 <script>
+import auth from "@/apis/auth";
 export default {
     data() {
         return {
-            user: {
-                username: "User-name",
-            },
-            portrait: "U",
+            username: "未登录用户",
+            sign: "鸟随鸾凤飞高远，人伴贤良品自高",
+            portrait: "未",
         };
+    },
+    created() {
+        auth.getInfo()
+            .then((data) => {
+                this.username = data.username;
+                this.portrait = this.username.slice(0, 1);
+            })
+            .catch((data) => {
+                this.$router.push("/login");
+            });
+        if (localStorage.getItem("sign") === null) {
+            this.sign = "未创建个性签名";
+        } else {
+            this.sign = localStorage.getItem("sign");
+        }
+    },
+    methods: {
+        onSetting() {
+            console.log(this.sign);
+        },
     },
 };
 </script>
@@ -37,7 +57,7 @@ export default {
         height: 100px;
         border-radius: 50px;
         box-shadow: 3px 2px 5px 2px rgb(170, 169, 169);
-        background: rgb(59, 85, 71);
+        background: rgb(124, 24, 24);
         color: rgb(238, 234, 234);
         margin-top: 10px;
     }
