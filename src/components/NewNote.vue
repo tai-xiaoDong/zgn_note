@@ -25,7 +25,17 @@
                         class="content"
                         v-model="note"
                     />
+
                     <div class="echo">
+                        <select v-model="selected" class="select">
+                            <option disabled value="">请选择笔记本</option>
+                            <option
+                                v-for="(notebook, index) in serverNotebooks"
+                                :key="index"
+                            >
+                                {{ notebook.notebooks }}
+                            </option>
+                        </select>
                         <div class="yes" @click="createNote">确定</div>
                         <div class="no" @click="noteNoShow">取消</div>
                     </div>
@@ -49,6 +59,8 @@
 </template>
 
 <script>
+import notebooks from "@/apis/notebooks";
+import notes from "@/apis/notes";
 import a from "@/assets/icons/newNote/book.svg";
 import b from "@/assets/icons/newNote/word.svg";
 
@@ -60,7 +72,20 @@ export default {
             notebookShow: false,
             notebook: "",
             note: "",
+            selected: "",
+            serverNotebooks: "",
         };
+    },
+    created() {
+        notebooks
+            .getAll()
+            .then((data) => {
+                this.serverNotebooks = data;
+                console.log(this.serverNotebooks);
+            })
+            .catch((data) => {
+                console.log(data);
+            });
     },
     methods: {
         NoteIsShow() {
@@ -80,15 +105,17 @@ export default {
                 window.alert("文件夹名不能为空");
             } else {
                 console.log(this.notebook);
+                notebooks.addNotebook({ notebooks: this.notebook });
                 this.notebook = "";
                 this.notebookShow = false;
             }
         },
         createNote() {
-            if (this.note === "") {
+            if (this.note === "" || this.selected === "") {
                 window.alert("文件名不能为空");
             } else {
                 console.log(this.note);
+                notes.addNotes({ notebooks: this.selected, notes: this.note });
                 this.note = "";
                 this.noteShow = false;
             }
@@ -159,6 +186,21 @@ export default {
             display: flex;
             justify-content: right;
             margin-top: 15px;
+            > .select {
+                border-radius: 10px;
+                box-shadow: 1px 1px 1px 1px rgb(201, 199, 199);
+                width: 120px;
+                border: none;
+                font-size: 14px;
+                background: rgb(59, 85, 71);
+                color: rgb(223, 217, 217);
+                padding: 5px;
+                > option {
+                    background: rgb(223, 217, 217);
+                    color: black;
+                }
+            }
+
             > .yes,
             .no {
                 margin-right: 10px;
@@ -172,6 +214,7 @@ export default {
             > .yes {
                 background: rgb(59, 85, 71);
                 color: rgb(223, 217, 217);
+                margin-left: 10px;
             }
         }
     }
