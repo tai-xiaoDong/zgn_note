@@ -50,6 +50,7 @@
     
 <script>
 import Auth from "@/apis/auth";
+import notebooks from "@/apis/notebooks";
 import axios from "axios";
 import request from "@/helpers/request";
 

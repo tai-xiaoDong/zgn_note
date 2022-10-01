@@ -2,7 +2,7 @@
     <div class="wrapper">
         <div class="alert">
             <div class="wrap">
-                <div class="content" :message="message">{{ message }}</div>
+                <div class="content">{{ message }}</div>
                 <div class="echo">
                     <div class="yes"><slot name="yes"></slot></div>
                     <div class="no"><slot name="no"></slot></div>
