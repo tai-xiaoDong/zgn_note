@@ -7,7 +7,7 @@
                     placeholder="请在此输入文件名"
                     class="content"
                     v-model="value"
-                    :promptValue="value"
+                    :values="value"
                 />
                 <div class="echo">
                     <div class="yes"><slot name="yes"></slot></div>
@@ -21,7 +21,6 @@
 <script>
 export default {
     name: "Prompt",
-    props: ["message"],
     data() {
         return {
             value: "",
@@ -43,9 +42,9 @@ export default {
     width: 500px;
     height: 110px;
     padding: 10px;
-    position: relative;
+    position: fixed;
     left: 40%;
-    top: 2%;
+    top: 40%;
     background: white;
     border-radius: 10px;
     box-shadow: 0px 4px 4px 0px rgb(196, 194, 194);

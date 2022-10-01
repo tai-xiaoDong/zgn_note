@@ -1,12 +1,45 @@
 <template>
     <div class="wrapper">
-        <div class="newNote">
+        <div class="wrappers" v-show="notebookShow">
+            <div class="prompt">
+                <div class="wraps">
+                    <input
+                        type="text"
+                        placeholder="请在此输入文件夹名"
+                        class="content"
+                        v-model="notebook"
+                    />
+                    <div class="echo">
+                        <div class="yes" @click="createNotebook">确定</div>
+                        <div class="no" @click="notebookNoShow">取消</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrappers" v-show="noteShow">
+            <div class="prompt">
+                <div class="wraps">
+                    <input
+                        type="text"
+                        placeholder="请在此输入文件名"
+                        class="content"
+                        v-model="note"
+                    />
+                    <div class="echo">
+                        <div class="yes" @click="createNote">确定</div>
+                        <div class="no" @click="noteNoShow">取消</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  -->
+        <div class="newNote" @click="NotebookIsShow">
             <svg>
                 <use xlink:href="#book" />
             </svg>
             <div class="txt">新建笔记本</div>
         </div>
-        <div class="newWord">
+        <div class="newWord" @click="NoteIsShow">
             <svg>
                 <use xlink:href="#word"></use>
             </svg>
@@ -21,6 +54,46 @@ import b from "@/assets/icons/newNote/word.svg";
 
 export default {
     name: "NewNote",
+    data() {
+        return {
+            noteShow: false,
+            notebookShow: false,
+            notebook: "",
+            note: "",
+        };
+    },
+    methods: {
+        NoteIsShow() {
+            this.noteShow = true;
+        },
+        NotebookIsShow() {
+            this.notebookShow = true;
+        },
+        notebookNoShow() {
+            this.notebookShow = false;
+        },
+        noteNoShow() {
+            this.noteShow = false;
+        },
+        createNotebook() {
+            if (this.notebook === "") {
+                window.alert("文件夹名不能为空");
+            } else {
+                console.log(this.notebook);
+                this.notebook = "";
+                this.notebookShow = false;
+            }
+        },
+        createNote() {
+            if (this.note === "") {
+                window.alert("文件名不能为空");
+            } else {
+                console.log(this.note);
+                this.note = "";
+                this.noteShow = false;
+            }
+        },
+    },
 };
 </script>
 
@@ -51,6 +124,55 @@ export default {
             margin-bottom: 5px;
             margin-top: 10px;
             margin-right: 5px;
+        }
+    }
+}
+.wrappers {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.prompt {
+    width: 500px;
+    height: 110px;
+    padding: 10px;
+    position: fixed;
+    left: 40%;
+    top: 40%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px 0px rgb(196, 194, 194);
+    .wraps {
+        > .content {
+            padding: 10px;
+            margin-left: 20px;
+            border: none;
+            width: 400px;
+        }
+        > .content::-webkit-input-placeholder {
+            padding-left: 10px;
+        }
+        > .echo {
+            display: flex;
+            justify-content: right;
+            margin-top: 15px;
+            > .yes,
+            .no {
+                margin-right: 10px;
+                padding: 10px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: 14px;
+                border-radius: 10px;
+                box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
+            }
+            > .yes {
+                background: rgb(59, 85, 71);
+                color: rgb(223, 217, 217);
+            }
         }
     }
 }
