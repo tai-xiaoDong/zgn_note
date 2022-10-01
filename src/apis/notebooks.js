@@ -10,12 +10,12 @@ const url = {
 export default {
     getAll() {
         return (
-            request(url.GET)
+            request(url.GET, 'get')
         )
     },
     addNotebook(notebooksName) {
         return (
-            request(url.ADD, notebooksName)
+            request(url.ADD, 'post', notebooksName)
         )
     },
     updateNotebook(notebooksName) {
