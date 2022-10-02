@@ -105,7 +105,11 @@ export default {
                 window.alert("文件夹名不能为空");
             } else {
                 console.log(this.notebook);
-                notebooks.addNotebook({ notebooks: this.notebook });
+                notebooks
+                    .addNotebook({ notebooks: this.notebook })
+                    .then((data) => {
+                        location.reload();
+                    });
                 this.notebook = "";
                 this.notebookShow = false;
             }
@@ -115,7 +119,11 @@ export default {
                 window.alert("文件名不能为空");
             } else {
                 console.log(this.note);
-                notes.addNotes({ notebooks: this.selected, notes: this.note });
+                notes
+                    .addNotes({ notebooks: this.selected, notes: this.note })
+                    .then((data) => {
+                        location.reload();
+                    });
                 this.note = "";
                 this.noteShow = false;
             }
