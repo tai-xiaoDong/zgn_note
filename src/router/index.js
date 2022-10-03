@@ -15,8 +15,7 @@ const routes = [
   // 登录
   {
     path: '/',
-    name: 'Library',
-    component: Library
+    redirect: '/library'
   },
   {
     path: '/library',
