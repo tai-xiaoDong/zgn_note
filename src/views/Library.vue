@@ -51,15 +51,19 @@
                     v-show="notes"
                     v-for="(value, index) in notes"
                     :key="index"
+                    :class="{ selectNote: selectNotes.indexOf(index) >= 0 }"
+                    @click="selectNote(index)"
                 >
-                    <div>{{ value }}</div>
+                    <div @click="getContent(value)" class="content">
+                        {{ value }}
+                    </div>
                     <div class="update" @click="noteIsShow">编辑</div>
                 </div>
             </div>
         </div>
         <main>
             <header>
-                <div class="date">创建时间：2022-9-19</div>
+                <div class="date">创建时间：{{ time }}</div>
                 <div class="control">
                     <div class="edit" @click="onEdit(notebook)">
                         <svg>
@@ -74,7 +78,7 @@
                 </div>
             </header>
             <div>
-                <div class="content"></div>
+                <div class="content">{{ content }}</div>
             </div>
         </main>
         <div class="user">
@@ -93,6 +97,7 @@ import auth from "@/apis/auth";
 import notebooks from "@/apis/notebooks";
 import notes from "@/apis/notes";
 import Prompt from "@/components/pop-ups/Prompt.vue";
+import dayjs from "dayjs";
 
 export default {
     name: "Library",
@@ -106,6 +111,10 @@ export default {
             newNOte: "",
             notebookShow: false,
             noteShow: false,
+            content: "",
+            time: "",
+            demo: "",
+            selectNotes: [],
         };
     },
     components: { NewNote, Avatar },
@@ -153,10 +162,22 @@ export default {
                     }
                 }
                 this.notes = array;
-                console.log(array);
             });
         },
-        getcontent() {},
+        getContent(value) {
+            notes
+                .getContent({
+                    notebooks: this.selected,
+                    notes: value,
+                })
+                .then((data) => {
+                    this.content = data[0].content;
+                    this.time = dayjs(data[0].createdAt).format("YYYY-MM-DD");
+                })
+                .catch((data) => {
+                    console.log(data);
+                });
+        },
         onDelete() {
             console.log("删除");
         },
@@ -179,6 +200,10 @@ export default {
         noteIsShow() {
             this.noteShow = true;
         },
+        selectNote(index) {
+            this.selectNotes = [];
+            this.selectNotes.push(index);
+        },
     },
 };
 </script>
@@ -194,7 +219,7 @@ export default {
         margin-left: 20px;
         > .wrap {
             display: flex;
-            margin-top: 25px;
+            margin-top: 60px;
             width: 220px;
             padding: 5px;
             border-radius: 10px;
@@ -209,11 +234,12 @@ export default {
                 font-size: 14px;
                 color: black;
                 padding: 5px;
-                margin-right: 5px;
+                margin-right: 10px;
                 height: 30px;
             }
             > .opera {
                 display: flex;
+
                 > .delete,
                 .update {
                     display: flex;
@@ -265,6 +291,7 @@ export default {
             display: flex;
             flex-direction: column;
             width: 230px;
+            /* min-width: 100px; */
             > .notes {
                 padding: 10px;
                 display: flex;
@@ -273,9 +300,21 @@ export default {
                 margin-right: 5px;
                 border-radius: 10px;
                 box-shadow: 1px 2px 4px 2px rgb(196, 194, 194);
+                align-items: center;
+                &.selectNote {
+                    border: 1px solid red;
+                    background: #e9e6e6;
+                }
+                > .content {
+                    flex-grow: 1;
+                }
                 > .update {
                     color: rgb(224, 65, 17);
+                    white-space: nowrap;
                 }
+            }
+            > .content:focus {
+                color: red;
             }
         }
     }
@@ -323,7 +362,7 @@ export default {
     > .user {
         min-width: 250px;
         padding-top: 20px;
-        margin-right: 30px;
+        margin-right: 20px;
     }
 }
 </style>

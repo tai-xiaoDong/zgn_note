@@ -1,7 +1,7 @@
 <template>
     <nav :class="change">
         <div class="navbar">
-            <router-link to="/" class="logo">
+            <router-link to="/library" class="logo">
                 <img src="@/assets/imgs/logo.png" />
             </router-link>
             <router-link to="/library" class="item" active-class="selected">
@@ -41,7 +41,7 @@
                     <svg class="big">
                         <use xlink:href="#narrow"></use>
                     </svg>
-                    <div class="txt">收起</div>
+                    <div class="txt">折叠</div>
                 </div>
             </div>
             <div class="item">
@@ -122,7 +122,6 @@ export default {
     color: rgb(42, 49, 59);
     > .navbar {
         height: 100vh;
-        box-shadow: 0px 2px 4px 1px rgb(155, 154, 154);
         > .selected {
             background: rgb(59, 85, 71);
             border-radius: 10px;
@@ -130,8 +129,7 @@ export default {
             box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
         }
         > .item,
-        .logout,
-        .logo {
+        .logout {
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -162,9 +160,10 @@ export default {
             }
         }
         .logo {
+            /* margin-bottom: 10px; */
             > img {
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
             }
         }
     }
@@ -174,8 +173,7 @@ export default {
     max-width: 170px;
     > .navbar {
         > .item,
-        .logout,
-        .logo {
+        .logout {
             > .rim {
                 display: flex;
                 > .big {
@@ -204,7 +202,8 @@ export default {
         }
         .logo {
             > img {
-                margin: 50px;
+                margin: 20px;
+                margin-left: 50px;
                 margin-bottom: 150px;
             }
         }
@@ -215,8 +214,7 @@ export default {
     max-width: 90px;
     > .navbar {
         > .item,
-        .logout,
-        .logo {
+        .logout {
             > .rim {
                 display: none;
             }
@@ -238,8 +236,8 @@ export default {
         }
         .logo {
             > img {
-                margin: 50px;
-                margin-left: 8px;
+                margin: 20px;
+                margin-left: 15px;
                 margin-bottom: 150px;
             }
         }
