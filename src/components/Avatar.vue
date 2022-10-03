@@ -50,24 +50,24 @@ export default {
     margin-bottom: 20px;
     margin-top: 15px;
     > .photo {
-        font-size: 50px;
+        font-size: 30px;
         text-align: center;
-        line-height: 100px;
-        width: 100px;
-        height: 100px;
-        border-radius: 50px;
-        box-shadow: 3px 2px 5px 2px rgb(170, 169, 169);
-        background: rgb(124, 24, 24);
+        line-height: 60px;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        box-shadow: 2px 1px 1px 1px rgb(170, 169, 169);
+        background: rgb(180, 48, 48);
         color: rgb(238, 234, 234);
         margin-top: 10px;
     }
+
     > .name {
         width: 200px;
-        font-size: 20px;
+        font-size: 30px;
         color: rgb(40, 74, 155);
-        height: 80px;
         text-align: center;
-        line-height: 80px;
+        line-height: 60px;
         border-radius: 10px;
     }
     > .sign {
@@ -75,7 +75,25 @@ export default {
         font-size: 14px;
         height: 80px;
         color: rgb(156, 86, 64);
-        margin-bottom: 20px;
+        /* margin-bottom: 20px; */
+    }
+}
+.user:hover {
+    > .photo {
+        font-size: 50px;
+        text-align: center;
+        line-height: 100px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        box-shadow: 2px 2px 5px 2px rgb(170, 169, 169);
+        background: rgb(124, 24, 24);
+        color: rgb(238, 234, 234);
+        margin-top: 10px;
+    }
+    > .name {
+        font-size: 40px;
+        line-height: 80px;
     }
 }
 </style>
