@@ -26,6 +26,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="newNotebook" v-show="notebookShow">
                 <input
                     type="text"
@@ -62,10 +63,10 @@
             </div>
         </div>
         <main>
-            <header>
-                <div class="date">创建时间：{{ time }}</div>
+            <header v-show="time">
+                <div class="date">{{ time }}</div>
                 <div class="control">
-                    <div class="edit" @click="onEdit(notebook)">
+                    <div class="edit" @click="toEdit">
                         <svg>
                             <use xlink:href="#edit" />
                         </svg>
@@ -79,6 +80,11 @@
             </header>
             <div>
                 <div class="content">{{ content }}</div>
+            </div>
+            <div class="student" v-show="!time">
+                <svg>
+                    <use xlink:href="#student" />
+                </svg>
             </div>
         </main>
         <div class="user">
@@ -96,7 +102,7 @@ import b from "@/assets/icons/library/edit.svg";
 import auth from "@/apis/auth";
 import notebooks from "@/apis/notebooks";
 import notes from "@/apis/notes";
-import Prompt from "@/components/pop-ups/Prompt.vue";
+import c from "@/assets/icons/student.svg";
 import dayjs from "dayjs";
 
 export default {
@@ -105,15 +111,16 @@ export default {
         return {
             selected: "",
             notebooks: false,
-            notes: false,
-
             newNotebook: "",
-            newNOte: "",
             notebookShow: false,
+
+            noteName: "",
+            notes: false,
+            newNOte: "",
             noteShow: false,
             content: "",
-            time: "",
-            demo: "",
+            time: false,
+
             selectNotes: [],
         };
     },
@@ -165,6 +172,7 @@ export default {
             });
         },
         getContent(value) {
+            this.noteName = value;
             notes
                 .getContent({
                     notebooks: this.selected,
@@ -172,25 +180,30 @@ export default {
                 })
                 .then((data) => {
                     this.content = data[0].content;
-                    this.time = dayjs(data[0].createdAt).format("YYYY-MM-DD");
+                    this.time =
+                        "创建时间：" +
+                        dayjs(data[0].createdAt).format("YYYY-MM-DD");
                 })
                 .catch((data) => {
                     console.log(data);
                 });
         },
+        toEdit() {
+            this.$router.push({
+                name: "Edit",
+                params: { notebook: this.selected, note: this.noteName },
+            });
+        },
         onDelete() {
             console.log("删除");
-        },
-        onEdit() {
-            console.log("编辑");
         },
         onUpdate(oldNotebooks) {
             // notebooks.updateNotebook({})
         },
+
         notebookISShow() {
             this.notebookShow = true;
         },
-
         notebookNoShow() {
             this.notebookShow = false;
         },
@@ -209,160 +222,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Library {
-    display: flex;
-    display: flex;
-    justify-content: space-between;
-    > .wrapper {
-        font-size: 14px;
-        padding: 10px;
-        margin-left: 20px;
-        > .wrap {
-            display: flex;
-            margin-top: 60px;
-            width: 220px;
-            padding: 5px;
-            border-radius: 10px;
-            box-shadow: 1px 2px 4px 2px rgb(196, 194, 194);
-            margin-bottom: 10px;
-            align-items: center;
-            background: #cfcccc;
-            > .select {
-                background: #cfcccc;
-                width: 150px;
-                border: none;
-                font-size: 14px;
-                color: black;
-                padding: 5px;
-                margin-right: 10px;
-                height: 30px;
-            }
-            > .opera {
-                display: flex;
-
-                > .delete,
-                .update {
-                    display: flex;
-                    > svg {
-                        width: 24px;
-                        height: 24px;
-                        margin-left: 5px;
-                    }
-                }
-                > .delete {
-                    > svg {
-                        fill: rgb(224, 65, 17);
-                    }
-                }
-            }
-        }
-        > .newNotebook,
-        .newNote {
-            display: flex;
-            border-radius: 10px;
-            box-shadow: 1px 2px 4px 2px rgb(196, 194, 194);
-            padding: 5px;
-            margin-bottom: 10px;
-            > input {
-                width: 150px;
-                margin-right: 5px;
-                border: none;
-                background: #f3f3f3;
-            }
-            > .yes,
-            .no {
-                padding: 10px;
-                padding-top: 5px;
-                padding-bottom: 5px;
-                font-size: 14px;
-                border-radius: 10px;
-                box-shadow: 1px 1px 1px 1px rgb(201, 199, 199);
-            }
-            > .yes {
-                background: rgb(59, 85, 71);
-                color: rgb(223, 217, 217);
-                margin-right: 5px;
-            }
-            > input::-webkit-input-placeholder {
-                padding-left: 10px;
-            }
-        }
-        > .title {
-            display: flex;
-            flex-direction: column;
-            width: 230px;
-            /* min-width: 100px; */
-            > .notes {
-                padding: 10px;
-                display: flex;
-                margin-bottom: 10px;
-                justify-content: space-between;
-                margin-right: 5px;
-                border-radius: 10px;
-                box-shadow: 1px 2px 4px 2px rgb(196, 194, 194);
-                align-items: center;
-                &.selectNote {
-                    border: 1px solid red;
-                    background: #e9e6e6;
-                }
-                > .content {
-                    flex-grow: 1;
-                }
-                > .update {
-                    color: rgb(224, 65, 17);
-                    white-space: nowrap;
-                }
-            }
-            > .content:focus {
-                color: red;
-            }
-        }
-    }
-    > main {
-        overflow: hidden;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 750px;
-        header {
-            display: flex;
-            max-width: 1200px;
-            min-width: 750px;
-            justify-content: space-between;
-            border-bottom: 1px solid black;
-            padding: 0px;
-            margin-top: 30px;
-            padding: 10px;
-            .control {
-                display: flex;
-                > .edit {
-                    margin-right: 20px;
-                    > svg {
-                        width: 24px;
-                        height: 24px;
-                    }
-                }
-                > .delete {
-                    color: rgb(224, 65, 17);
-                    > svg {
-                        width: 24px;
-                        height: 24px;
-                        fill: rgb(224, 65, 17);
-                    }
-                }
-            }
-        }
-        > div {
-            max-width: 1200px;
-            min-width: 750px;
-            padding: 30px;
-        }
-    }
-    > .user {
-        min-width: 250px;
-        padding-top: 20px;
-        margin-right: 20px;
-    }
-}
+@import "@/assets/style/library.scss";
 </style>
