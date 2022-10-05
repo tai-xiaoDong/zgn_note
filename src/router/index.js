@@ -46,7 +46,7 @@ const routes = [
     component: Recycle
   },
   {
-    path: '/edit',
+    path: '/edit/notebook/:notebook/note/:note',
     name: 'Edit',
     component: Edit
   },
