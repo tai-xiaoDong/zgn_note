@@ -33,7 +33,7 @@
                                 v-for="(notebook, index) in serverNotebooks"
                                 :key="index"
                             >
-                                {{ notebook.notebooks }}
+                                {{ notebook }}
                             </option>
                         </select>
                         <div class="yes" @click="createNote">确定</div>
@@ -80,7 +80,15 @@ export default {
         notebooks
             .getAll()
             .then((data) => {
-                this.serverNotebooks = data;
+                let array = [];
+                for (let i = 0; i < data.length; i++) {
+                    if (array.indexOf(data[i].notebooks) === -1) {
+                        array.push(data[i].notebooks);
+                    } else {
+                        continue;
+                    }
+                }
+                this.serverNotebooks = array;
                 console.log(this.serverNotebooks);
             })
             .catch((data) => {
