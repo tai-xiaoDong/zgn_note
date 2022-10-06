@@ -1,5 +1,8 @@
 <template>
     <div class="wrapper">
+        <Alert :message="message" v-show="AlertShow">
+            <template v-slot:yes><div @click="noAlert">确认</div></template>
+        </Alert>
         <div class="wrappers" v-show="notebookShow">
             <div class="prompt">
                 <div class="wraps">
@@ -63,6 +66,7 @@ import notebooks from "@/apis/notebooks";
 import notes from "@/apis/notes";
 import a from "@/assets/icons/newNote/book.svg";
 import b from "@/assets/icons/newNote/word.svg";
+import Alert from "./pop-ups/Alert.vue";
 
 export default {
     name: "NewNote",
@@ -74,6 +78,9 @@ export default {
             note: "",
             selected: "",
             serverNotebooks: "",
+
+            message: "",
+            AlertShow: false,
         };
     },
     created() {
@@ -89,12 +96,12 @@ export default {
                     }
                 }
                 this.serverNotebooks = array;
-                console.log(this.serverNotebooks);
             })
             .catch((data) => {
                 console.log(data);
             });
     },
+    components: { Alert },
     methods: {
         NoteIsShow() {
             this.noteShow = true;
@@ -108,15 +115,24 @@ export default {
         noteNoShow() {
             this.noteShow = false;
         },
+        onAlert(name) {
+            this.AlertShow = true;
+            this.message = name;
+        },
+        noAlert() {
+            this.AlertShow = false;
+        },
         createNotebook() {
             if (this.notebook === "") {
-                window.alert("文件夹名不能为空");
+                this.onAlert("文件夹名不能为空");
             } else {
-                console.log(this.notebook);
                 notebooks
                     .addNotebook({ notebooks: this.notebook })
                     .then((data) => {
                         location.reload();
+                    })
+                    .catch((data) => {
+                        this.onAlert(data.msg);
                     });
                 this.notebook = "";
                 this.notebookShow = false;
@@ -124,13 +140,16 @@ export default {
         },
         createNote() {
             if (this.note === "" || this.selected === "") {
-                window.alert("文件名不能为空");
+                this.onAlert("文件夹名不能为空");
             } else {
                 console.log(this.note);
                 notes
                     .addNotes({ notebooks: this.selected, notes: this.note })
                     .then((data) => {
                         location.reload();
+                    })
+                    .catch((data) => {
+                        this.onAlert(data.msg);
                     });
                 this.note = "";
                 this.noteShow = false;

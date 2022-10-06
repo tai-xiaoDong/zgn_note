@@ -2,7 +2,9 @@
     <div class="wrapper">
         <div class="alert">
             <div class="wrap">
-                <div class="content" :message="message">{{ message }}</div>
+                <div class="content">
+                    {{ message }}
+                </div>
                 <div class="echo">
                     <div class="yes"><slot name="yes"></slot></div>
                 </div>
@@ -19,5 +21,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/style/confirm.scss";
+@import "@/assets/style/alert.scss";
 </style>
