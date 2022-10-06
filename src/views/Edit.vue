@@ -3,9 +3,9 @@
         <header class="setting">
             <h4 class="tw">tw</h4>
             <h4 class="zgn">zgn</h4>
-            <div>已登录</div>
-            <router-link to="/library"> 返回主页 </router-link>
-            <div @click="a">当前笔记</div>
+            <router-link to="/library"> 主页 </router-link>
+            <div>{{ "用户名：" + user.name }}</div>
+            <div>{{ "当前笔记：" + this.$route.params.note }}</div>
             <div>保存</div>
             <div>帮助</div>
         </header>
@@ -17,11 +17,16 @@
 
 <script>
 import auth from "@/apis/auth";
+import notes from "@/apis/notes";
+
 export default {
     name: "Edit",
     data() {
         return {
             content: "",
+            user: {
+                name: "",
+            },
         };
     },
 
@@ -29,10 +34,18 @@ export default {
         //检查是否登录
         auth.getInfo()
             .then((data) => {
-                console.log(data);
+                this.user.name = data.username;
             })
             .catch((data) => {
                 this.$router.push("/login");
+            });
+        notes
+            .getContent({
+                notebooks: this.$route.params.notebook,
+                notes: this.$route.params.note,
+            })
+            .then((data) => {
+                this.content = data[0].content;
             });
     },
     methods: {},
@@ -66,6 +79,9 @@ export default {
         > textarea {
             width: 1000px;
             overflow: hidden;
+            padding: 20px;
+            border: none;
+            background: #f3f3f3;
         }
     }
 }
