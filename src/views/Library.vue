@@ -1,5 +1,8 @@
 <template>
     <div class="Library">
+        <Alert :message="message" v-show="AlertShow">
+            <template v-slot:yes><div @click="noAlert">确认</div></template>
+        </Alert>
         <navBar />
         <div class="wrapper">
             <div class="wrap">
@@ -33,16 +36,16 @@
                     placeholder="请输入新的笔记本名"
                     v-model="newNotebook"
                 />
-                <div class="yes">确定</div>
+                <div class="yes" @click="updateNotebook">确定</div>
                 <div class="no" @click="notebookNoShow">取消</div>
             </div>
             <div class="newNote" v-show="noteShow">
                 <input
                     type="text"
                     placeholder="请输入新的笔记名"
-                    v-model="newNOte"
+                    v-model="newNote"
                 />
-                <div class="yes">确定</div>
+                <div class="yes" @click="updateNote">确定</div>
                 <div class="no" @click="noteNoShow">取消</div>
             </div>
 
@@ -58,7 +61,7 @@
                     <div @click="getContent(value)" class="content">
                         {{ value }}
                     </div>
-                    <div class="update" @click="noteIsShow">编辑</div>
+                    <div class="update" @click="noteIsShow(value)">编辑</div>
                 </div>
             </div>
         </div>
@@ -104,27 +107,30 @@ import notebooks from "@/apis/notebooks";
 import notes from "@/apis/notes";
 import c from "@/assets/icons/student.svg";
 import dayjs from "dayjs";
+import Alert from "@/components/pop-ups/Alert.vue";
 
 export default {
     name: "Library",
     data() {
         return {
-            selected: "",
-            notebooks: false,
-            newNotebook: "",
-            notebookShow: false,
+            selected: "", // 当前笔记本id
+            notebooks: false, //笔记本列表
+            newNotebook: "", // 新笔记本id
+            notebookShow: false, // 控制组件显示
 
             noteName: "",
             notes: false,
-            newNOte: "",
+            newNote: "",
             noteShow: false,
             content: "",
             time: false,
 
             selectNotes: [],
+            message: "",
+            AlertShow: false,
         };
     },
-    components: { NewNote, Avatar },
+    components: { NewNote, Avatar, Alert },
 
     created() {
         //检查是否登录
@@ -135,6 +141,7 @@ export default {
             .catch((data) => {
                 this.$router.push("/login");
             });
+        // 请求所有笔记本
         notebooks
             .getAll()
             .then((data) => {
@@ -152,12 +159,14 @@ export default {
                 console.log(data);
             });
     },
+    // 请求笔记
     watch: {
         selected: function () {
             this.getNotes(this.selected);
         },
     },
     methods: {
+        // 请求笔记
         getNotes(notebook) {
             notes.getNotes({ notebooks: notebook }).then((data) => {
                 let array = [];
@@ -171,6 +180,7 @@ export default {
                 this.notes = array;
             });
         },
+        // 请求笔记内容
         getContent(value) {
             this.noteName = value;
             notes
@@ -188,6 +198,7 @@ export default {
                     console.log(data);
                 });
         },
+        // 跳转到笔记编辑页面
         toEdit() {
             this.$router.push({
                 name: "Edit",
@@ -197,8 +208,36 @@ export default {
         onDelete() {
             console.log("删除");
         },
-        onUpdate(oldNotebooks) {
-            // notebooks.updateNotebook({})
+        // 更新笔记本名字
+        updateNotebook() {
+            let notebookName = {
+                newNotebooks: this.newNotebook,
+                notebooks: this.selected,
+            };
+            notebooks
+                .updateNotebook(notebookName)
+                .then((data) => {
+                    location.reload();
+                })
+                .catch((data) => {
+                    this.onAlert(data.msg);
+                });
+        },
+        // 更新笔记名字
+        updateNote() {
+            let noteName = {
+                newNotes: this.newNote,
+                notebooks: this.selected,
+                notes: this.noteName,
+            };
+            notes
+                .updateNotes(noteName)
+                .then((data) => {
+                    location.reload();
+                })
+                .catch((data) => {
+                    this.onAlert(data.msg);
+                });
         },
 
         notebookISShow() {
@@ -210,12 +249,22 @@ export default {
         noteNoShow() {
             this.noteShow = false;
         },
-        noteIsShow() {
+        noteIsShow(value) {
+            this.noteName = value;
             this.noteShow = true;
         },
+        // 笔记选中样式
         selectNote(index) {
             this.selectNotes = [];
             this.selectNotes.push(index);
+        },
+        // 提示框
+        onAlert(name) {
+            this.AlertShow = true;
+            this.message = name;
+        },
+        noAlert() {
+            this.AlertShow = false;
         },
     },
 };

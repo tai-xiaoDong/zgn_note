@@ -3,8 +3,8 @@ import request from "@/helpers/request";
 const url = {
     GET: '/notebooks/notes',
     ADD: '/notes',
-    SET: '/update/notebooks',
-    DEL: '/notebooks/:notebook',
+    SET: '/update/notes',
+    DEL: '/delete/notes',
     read: '/content',
 }
 
@@ -27,7 +27,7 @@ export default {
     },
     deleteNotes(notebooksName) {
         return (
-            request(url.ADD, notebooksName)
+            request(url.ADD, 'post', notebooksName)
         )
     },
 
