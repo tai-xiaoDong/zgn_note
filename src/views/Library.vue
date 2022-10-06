@@ -105,7 +105,7 @@ import b from "@/assets/icons/library/edit.svg";
 import auth from "@/apis/auth";
 import notebooks from "@/apis/notebooks";
 import notes from "@/apis/notes";
-import c from "@/assets/icons/student.svg";
+import c from "@/assets/icons/library/student.svg";
 import dayjs from "dayjs";
 import Alert from "@/components/pop-ups/Alert.vue";
 

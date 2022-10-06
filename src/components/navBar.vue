@@ -72,13 +72,13 @@
 </template>
 
 <script>
-import a from "@/assets/icons/library.svg";
-import b from "@/assets/icons/plan.svg";
-import c from "@/assets/icons/setting.svg";
-import d from "@/assets/icons/login.svg";
-import e from "@/assets/icons/recycle.svg";
-import f from "@/assets/icons/wide.svg";
-import g from "@/assets/icons/narrow.svg";
+import a from "@/assets/icons/navbar/library.svg";
+import b from "@/assets/icons/navbar/plan.svg";
+import c from "@/assets/icons/navbar/setting.svg";
+import d from "@/assets/icons/navbar/login.svg";
+import e from "@/assets/icons/navbar/recycle.svg";
+import f from "@/assets/icons/navbar/wide.svg";
+import g from "@/assets/icons/navbar/narrow.svg";
 import request from "@/helpers/request";
 import Confirm from "@/components/pop-ups/Confirm.vue";
 
