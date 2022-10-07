@@ -75,25 +75,25 @@
             </div>
             <div class="user" v-show="styleShow">
                 <div class="wrap">
-                    <div class="photo" :style="'background:' + background">
+                    <div class="photo" :style="background">
                         {{ user.portrait }}
                     </div>
                     <div class="setPhoto">
                         <div>选择头像颜色：</div>
                         <input type="color" v-model="color" />
-                        <button @click="a">确定</button>
+                        <button @click="setColor">确定</button>
                     </div>
                 </div>
             </div>
             <div class="user" v-show="styleShow">
                 <div class="wrap">
-                    <div>侧边栏默认样式</div>
+                    <div class="nav">侧边栏默认样式</div>
                     <select v-model="selected" class="select">
                         <option disabled value="">请选择</option>
                         <option>展开</option>
                         <option>折叠</option>
                     </select>
-                    <button>确定</button>
+                    <button @click="setNav">确定</button>
                 </div>
             </div>
         </main>
@@ -138,7 +138,7 @@ export default {
             message: "",
             showMessage: false,
             showAlert: false,
-            background: "black",
+            background: "",
             selected: "",
 
             userShow: false,
@@ -163,16 +163,20 @@ export default {
             this.user.sign = localStorage.getItem("sign");
         }
         if (localStorage.getItem("color") === null) {
-            this.background = "rgb(105, 28, 28)";
+            this.background = "background:rgb(105, 28, 28)";
         } else {
             this.background = localStorage.getItem("color").toString();
         }
     },
     methods: {
-        a() {
-            console.log(this.color);
+        setNav() {
+            let a = JSON.stringify(this.selected);
+            localStorage.setItem("Nav", a);
+        },
+        setColor() {
             this.background = this.color.toString();
-            localStorage.setItem("color", this.color);
+            let a = JSON.stringify(this.color);
+            localStorage.setItem("color", a);
         },
         logout() {
             this.showMessage = true;
@@ -268,6 +272,14 @@ export default {
             margin-top: 10px;
             > .wrap {
                 display: flex;
+                > .nav {
+                    display: flex;
+                    align-items: center;
+                }
+                > select {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                }
                 > .setPhoto {
                     > input {
                         width: 40px;

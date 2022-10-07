@@ -92,6 +92,14 @@ export default {
         };
     },
     components: { Confirm },
+    created() {
+        let a = JSON.parse(localStorage.getItem("Nav"));
+        if (a === "展开") {
+            this.change = "wide";
+        } else {
+            this.change = "narrow";
+        }
+    },
     methods: {
         navChange1() {
             this.change = "narrow";
