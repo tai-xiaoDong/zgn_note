@@ -95,13 +95,6 @@ export default {
                 window.alert(this.error.passwordErr);
                 return;
             }
-
-            console.log(
-                "账号：",
-                this.login.username,
-                "密码：",
-                this.login.password
-            );
             Auth.login({
                 username: this.login.username,
                 password: this.login.password,
@@ -128,12 +121,6 @@ export default {
                 window.alert(this.error.passwordErr);
                 return;
             }
-            console.log(
-                "账号：",
-                this.register.username,
-                "密码：",
-                this.register.password
-            );
             Auth.register({
                 username: this.register.username,
                 password: this.register.password,

@@ -8,13 +8,13 @@
                 </svg>
                 <div>账户资料</div>
             </div>
-            <div class="option" tabindex="2">
+            <div class="option" tabindex="2" @click="concealIsShow">
                 <svg>
                     <use xlink:href="#conceal" />
                 </svg>
                 <div>隐私设置</div>
             </div>
-            <div class="option" tabindex="3">
+            <div class="option" tabindex="3" @click="styleIsShow">
                 <svg>
                     <use xlink:href="#style" />
                 </svg>
@@ -57,15 +57,59 @@
                 </div>
                 <button @click="setSign">确定</button>
             </div>
+            <div class="password" v-show="concealShow">
+                <h1>修改密码</h1>
+                <div class="setPassword">
+                    <input
+                        type="password"
+                        v-model="password1"
+                        placeholder="请输入新密码"
+                    />
+                    <input
+                        type="password"
+                        v-model="password2"
+                        placeholder="请再次输入密码"
+                    />
+                    <button @click="setPassword">确定</button>
+                </div>
+            </div>
+            <div class="user" v-show="styleShow">
+                <div class="wrap">
+                    <div class="photo" :style="'background:' + background">
+                        {{ user.portrait }}
+                    </div>
+                    <div class="setPhoto">
+                        <div>选择头像颜色：</div>
+                        <input type="color" v-model="color" />
+                        <button @click="a">确定</button>
+                    </div>
+                </div>
+            </div>
+            <div class="user" v-show="styleShow">
+                <div class="wrap">
+                    <div>侧边栏默认样式</div>
+                    <select v-model="selected" class="select">
+                        <option disabled value="">请选择</option>
+                        <option>展开</option>
+                        <option>折叠</option>
+                    </select>
+                    <button>确定</button>
+                </div>
+            </div>
         </main>
         <Confirm :message="message" v-show="showMessage">
             <template v-slot:yes>
                 <div @click="isLogout">确定</div>
             </template>
             <template v-slot:no>
-                <div @click="noLogout">取消</div>
+                <div @click="showMessage = false">取消</div>
             </template>
         </Confirm>
+        <Alert :message="message" v-show="showAlert">
+            <template v-slot:yes>
+                <div @click="showAlert = false">确定</div>
+            </template>
+        </Alert>
     </div>
 </template>
   
@@ -77,6 +121,7 @@ import c from "@/assets/icons/setting/home.svg";
 import d from "@/assets/icons/setting/logout.svg";
 import f from "@/assets/icons/setting/style.svg";
 import Confirm from "@/components/pop-ups/Confirm.vue";
+import Alert from "@/components/pop-ups/Alert.vue";
 
 export default {
     name: "Setting",
@@ -87,16 +132,21 @@ export default {
                 portrait: "",
                 sign: "",
             },
-            message: "确认注销？",
+            color: "",
+            password1: "",
+            password2: "",
+            message: "",
             showMessage: false,
+            showAlert: false,
             background: "black",
+            selected: "",
 
             userShow: false,
-            styleShow: false,
+            styleShow: true,
             concealShow: false,
         };
     },
-    components: { Confirm },
+    components: { Confirm, Alert },
     created() {
         //检查是否登录
         auth.getInfo()
@@ -105,7 +155,6 @@ export default {
                 this.user.portrait = this.user.name.slice(0, 1);
             })
             .catch((data) => {
-                console.log(data);
                 this.$router.push("/login");
             });
         if (localStorage.getItem("sign") === null) {
@@ -113,20 +162,27 @@ export default {
         } else {
             this.user.sign = localStorage.getItem("sign");
         }
+        if (localStorage.getItem("color") === null) {
+            this.background = "rgb(105, 28, 28)";
+        } else {
+            this.background = localStorage.getItem("color").toString();
+        }
     },
     methods: {
+        a() {
+            console.log(this.color);
+            this.background = this.color.toString();
+            localStorage.setItem("color", this.color);
+        },
         logout() {
             this.showMessage = true;
+            this.message = "确认注销？";
         },
         isLogout() {
             localStorage.setItem("token", "");
             this.$router.push("/login");
         },
-        noLogout() {
-            this.showMessage = false;
-        },
         setSign() {
-            console.log(this.user.sign);
             localStorage.setItem("sign", this.user.sign);
         },
         userIsShow() {
@@ -144,10 +200,38 @@ export default {
             this.styleShow = false;
             this.concealShow = true;
         },
+        checkPassWord(password) {
+            return {
+                isValid: /^.{6,16}$/.test(password),
+            };
+        },
+        setPassword() {
+            let result = this.checkPassWord(this.password1);
+            if (!result.isValid) {
+                this.showAlert = true;
+                this.message = "密码必须为6-16位";
+                return;
+            } else {
+                if (this.password1 === this.password2) {
+                    auth.setPassWord({ newPassword: this.password1 })
+                        .then((data) => {
+                            console.log(data);
+                            localStorage.setItem("token", "");
+                            this.$router.push("/login");
+                        })
+                        .catch((data) => {
+                            console.log(data);
+                        });
+                } else {
+                    this.showAlert = true;
+                    this.message = "两次密码不相同！";
+                }
+            }
+        },
     },
 };
 </script>
-<style lang="scss"scoped>
+<style lang="scss" scoped>
 .wrapper {
     display: flex;
     white-space: nowrap;
@@ -181,8 +265,16 @@ export default {
             justify-content: space-between;
             background: white;
             padding: 20px;
+            margin-top: 10px;
             > .wrap {
                 display: flex;
+                > .setPhoto {
+                    > input {
+                        width: 40px;
+                        margin-top: 10px;
+                        margin-right: 10px;
+                    }
+                }
                 > .photo {
                     font-size: 30px;
                     text-align: center;
@@ -191,7 +283,7 @@ export default {
                     height: 60px;
                     border-radius: 30px;
                     box-shadow: 2px 1px 1px 1px rgb(170, 169, 169);
-                    background: rgb(105, 28, 28);
+                    /* background: rgb(105, 28, 28); */
                     color: rgb(238, 234, 234);
                     margin-right: 20px;
                 }
@@ -239,6 +331,19 @@ export default {
             padding-right: 20px;
             padding-left: 20px;
         }
+        .password {
+            .setPassword {
+                display: flex;
+                flex-direction: column;
+                /* border: 1px solid red; */
+                align-items: flex-end;
+                width: 310px;
+                > input,
+                button {
+                    margin-top: 20px;
+                }
+            }
+        }
     }
 }
 button {
@@ -250,11 +355,13 @@ button {
     border-radius: 10px;
     box-shadow: 1px 0px 0px 1px rgb(150, 147, 147);
     border: none;
+    width: 50px;
 }
 input {
     padding: 5px;
     border: none;
     width: 300px;
+    font-size: 14px;
 }
 svg {
     height: 1em;
