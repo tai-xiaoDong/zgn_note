@@ -6,9 +6,10 @@
 }
 
 .alert {
-    width: 300px;
-    height: 100px;
+    // height: 50px;
     padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     position: fixed;
     left: 45%;
     top: 2%;
@@ -18,30 +19,23 @@
 
     >.wrap {
         >.content {
-            padding: 10px;
             color: black;
-        }
-
-        >.echo {
             display: flex;
-            justify-content: right;
+            align-items: center;
+            justify-content: center;
 
-            >.yes,
-            .no {
-                margin-right: 10px;
-                margin-top: 10px;
+            >.yes {
+                margin-right: 20px;
                 padding: 10px;
                 padding-top: 5px;
                 padding-bottom: 5px;
                 font-size: 14px;
                 border-radius: 10px;
-                box-shadow: 1px 1px 1px 1px rgb(150, 147, 147);
-            }
-
-            >.yes {
-                background: rgb(59, 85, 71);
+                background: rgb(31, 109, 67);
                 color: rgb(223, 217, 217);
             }
         }
+
+
     }
 }

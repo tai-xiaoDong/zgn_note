@@ -1,6 +1,6 @@
 <template>
     <div class="user" @click="onSetting">
-        <div class="photo">{{ portrait }}</div>
+        <div class="photo" :style="background">{{ portrait }}</div>
         <div class="name">{{ username }}</div>
         <div class="sign">简介：{{ sign }}</div>
     </div>
@@ -14,6 +14,7 @@ export default {
             username: "未登录用户",
             sign: "鸟随鸾凤飞高远，人伴贤良品自高",
             portrait: "未",
+            background: "",
         };
     },
     created() {
@@ -29,6 +30,12 @@ export default {
             this.sign = "未创建个性签名";
         } else {
             this.sign = localStorage.getItem("sign");
+        }
+        if (localStorage.getItem("color") !== null) {
+            this.background =
+                "background:" + JSON.parse(localStorage.getItem("color"));
+        } else {
+            this.background = "background:rgb(105, 28, 28)";
         }
     },
     methods: {
@@ -57,11 +64,9 @@ export default {
         height: 60px;
         border-radius: 30px;
         box-shadow: 2px 1px 1px 1px rgb(170, 169, 169);
-        background: rgb(180, 48, 48);
         color: rgb(238, 234, 234);
         margin-top: 10px;
     }
-
     > .name {
         width: 200px;
         font-size: 30px;
