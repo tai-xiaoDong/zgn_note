@@ -30,7 +30,7 @@
         <main>
             <div class="user" v-show="userShow">
                 <div class="wrap">
-                    <div class="photo" :style="'background:' + background">
+                    <div class="photo" :style="background">
                         {{ user.portrait }}
                     </div>
                     <div class="name">
@@ -107,7 +107,7 @@
         </Confirm>
         <Alert :message="message" v-show="showAlert">
             <template v-slot:yes>
-                <div @click="showAlert = false">确定</div>
+                <div @click="showAlert = false">提示</div>
             </template>
         </Alert>
     </div>
@@ -141,8 +141,8 @@ export default {
             background: "",
             selected: "",
 
-            userShow: false,
-            styleShow: true,
+            userShow: true,
+            styleShow: false,
             concealShow: false,
         };
     },
@@ -172,11 +172,22 @@ export default {
         setNav() {
             let a = JSON.stringify(this.selected);
             localStorage.setItem("Nav", a);
+            this.showAlert = true;
+            this.message = "设置成功";
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 1000);
         },
         setColor() {
-            this.background = this.color.toString();
+            this.background = "background:" + this.color.toString();
+            console.log(this.background);
             let a = JSON.stringify(this.color);
             localStorage.setItem("color", a);
+            this.showAlert = true;
+            this.message = "设置成功";
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 1000);
         },
         logout() {
             this.showMessage = true;
@@ -214,6 +225,9 @@ export default {
             if (!result.isValid) {
                 this.showAlert = true;
                 this.message = "密码必须为6-16位";
+                setTimeout(() => {
+                    this.showAlert = false;
+                }, 1000);
                 return;
             } else {
                 if (this.password1 === this.password2) {
@@ -229,6 +243,9 @@ export default {
                 } else {
                     this.showAlert = true;
                     this.message = "两次密码不相同！";
+                    setTimeout(() => {
+                        this.showAlert = false;
+                    }, 1000);
                 }
             }
         },
@@ -295,7 +312,6 @@ export default {
                     height: 60px;
                     border-radius: 30px;
                     box-shadow: 2px 1px 1px 1px rgb(170, 169, 169);
-                    /* background: rgb(105, 28, 28); */
                     color: rgb(238, 234, 234);
                     margin-right: 20px;
                 }
@@ -344,15 +360,18 @@ export default {
             padding-left: 20px;
         }
         .password {
+            padding: 20px;
             .setPassword {
                 display: flex;
+                margin-top: 20px;
+                padding: 20px;
                 flex-direction: column;
-                /* border: 1px solid red; */
                 align-items: flex-end;
-                width: 310px;
+                width: 340px;
                 > input,
                 button {
                     margin-top: 20px;
+                    margin-left: 20px;
                 }
             }
         }
@@ -374,6 +393,8 @@ input {
     border: none;
     width: 300px;
     font-size: 14px;
+    border: 1px solid rgb(184, 180, 180);
+    padding-left: 5px;
 }
 svg {
     height: 1em;
