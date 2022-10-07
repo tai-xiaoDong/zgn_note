@@ -5,7 +5,8 @@ const url = {
     register: '/auth/register',
     login: '/auth/login',
     get_info: '/auth',
-    setPassWord: '/auth/update'
+    setPassWord: '/auth/update',
+    deletePlan: '/auth/plan/delete',
 };
 
 export default {
@@ -27,6 +28,11 @@ export default {
     setPassWord(newPassword) {
         return (
             request(url.setPassWord, 'post', newPassword)
+        )
+    },
+    deletePlan() {
+        return (
+            request(url.deletePlan, 'get')
         )
     }
 }
