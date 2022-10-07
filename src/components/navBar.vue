@@ -94,10 +94,10 @@ export default {
     components: { Confirm },
     created() {
         let a = JSON.parse(localStorage.getItem("Nav"));
-        if (a === "展开") {
-            this.change = "wide";
-        } else {
+        if (a === "折叠") {
             this.change = "narrow";
+        } else {
+            this.change = "wide";
         }
     },
     methods: {
