@@ -3,10 +3,8 @@
         <div class="alert">
             <div class="wrap">
                 <div class="content">
-                    {{ message }}
-                </div>
-                <div class="echo">
                     <div class="yes"><slot name="yes"></slot></div>
+                    <div class="echo">{{ message }}</div>
                 </div>
             </div>
         </div>
