@@ -199,6 +199,11 @@ export default {
         },
         setSign() {
             localStorage.setItem("sign", this.user.sign);
+            this.showAlert = true;
+            this.message = "设置成功";
+            setTimeout(() => {
+                this.showAlert = false;
+            }, 1000);
         },
         userIsShow() {
             this.userShow = true;

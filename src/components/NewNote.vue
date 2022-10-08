@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <Alert :message="message" v-show="AlertShow">
-            <template v-slot:yes><div @click="noAlert">确认</div></template>
+            <template v-slot:yes><div @click="noAlert">提示</div></template>
         </Alert>
         <div class="wrappers" v-show="notebookShow">
             <div class="prompt">
@@ -118,6 +118,9 @@ export default {
         onAlert(name) {
             this.AlertShow = true;
             this.message = name;
+            setTimeout(() => {
+                this.AlertShow = false;
+            }, 1000);
         },
         noAlert() {
             this.AlertShow = false;
