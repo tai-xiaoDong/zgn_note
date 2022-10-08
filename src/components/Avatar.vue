@@ -53,7 +53,7 @@ export default {
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
-    box-shadow: 0px 4px 4px 0px rgb(196, 194, 194);
+    box-shadow: 1px 2px 4px 1px rgb(196, 194, 194);
     margin-bottom: 20px;
     margin-top: 15px;
     > .photo {
@@ -78,9 +78,8 @@ export default {
     > .sign {
         padding: 20px;
         font-size: 14px;
-        height: 80px;
+        /* height: 80px; */
         color: rgb(156, 86, 64);
-        /* margin-bottom: 20px; */
     }
 }
 .user:hover {

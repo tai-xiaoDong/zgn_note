@@ -93,12 +93,14 @@
         <div class="user">
             <Avatar />
             <NewNote />
+            <ShowPlan />
         </div>
     </div>
 </template>
 
 <script>
 import NewNote from "../components/NewNote.vue";
+import ShowPlan from "@/components/ShowPlan.vue";
 import Avatar from "@/components/Avatar.vue";
 import a from "@/assets/icons/library/delete.svg";
 import b from "@/assets/icons/library/edit.svg";
@@ -108,6 +110,7 @@ import notes from "@/apis/notes";
 import c from "@/assets/icons/library/student.svg";
 import dayjs from "dayjs";
 import Alert from "@/components/pop-ups/Alert.vue";
+import ShowPlanVue from "@/components/ShowPlan.vue";
 
 export default {
     name: "Library",
@@ -130,7 +133,7 @@ export default {
             AlertShow: false,
         };
     },
-    components: { NewNote, Avatar, Alert },
+    components: { NewNote, Avatar, Alert, ShowPlan },
 
     created() {
         //检查是否登录

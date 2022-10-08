@@ -168,9 +168,8 @@ export default {
     font-size: 16px;
     max-width: 250px;
     border-radius: 10px;
-    color: rgb(73, 116, 94);
-    box-shadow: 0px 4px 4px 0px rgb(196, 194, 194);
-
+    box-shadow: 0px 2px 4px 0px rgb(196, 194, 194);
+    margin-bottom: 30px;
     > .newNote,
     .newWord {
         display: flex;
