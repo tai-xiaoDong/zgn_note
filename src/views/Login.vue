@@ -1,5 +1,18 @@
 <template>
     <div class="wrapper">
+        <Alert :message="message" v-show="AlertShow">
+            <template v-slot:yes><div @click="noAlert">提示</div></template>
+        </Alert>
+        <div class="text">
+            <div class="big-title">Mark</div>
+            <div class="left-title">
+                <div class="small-title">
+                    <div class="online">online</div>
+                    <div class="simple">simple</div>
+                </div>
+                <div class="down">down</div>
+            </div>
+        </div>
         <transition name="login-ing">
             <div class="form" v-show="isShowLogin">
                 <div class="logo">
@@ -17,7 +30,7 @@
                 />
                 <button @click="onLogin">登录</button>
                 <nav>
-                    <router-link to="/">游客访问</router-link>
+                    <span @click="tourist">游客访问</span>
                     <span @click="showRegister">注册</span>
                 </nav>
             </div>
@@ -40,7 +53,7 @@
                 />
                 <button @click="onRegister">注册</button>
                 <nav>
-                    <router-link to="/library">游客访问</router-link>
+                    <span @click="tourist">游客访问</span>
                     <span @click="showLogin">登录</span>
                 </nav>
             </div>
@@ -50,9 +63,11 @@
     
 <script>
 import Auth from "@/apis/auth";
+import Alert from "@/components/pop-ups/Alert.vue";
 import notebooks from "@/apis/notebooks";
 import axios from "axios";
 import request from "@/helpers/request";
+import d from "@/assets/icons/setting/logout.svg";
 
 export default {
     name: "Login",
@@ -73,9 +88,36 @@ export default {
                 passwordErr: "请输入正确的密码",
                 nullError: "用户名或者密码不能为空",
             },
+            AlertShow: false,
+            message: "",
         };
     },
+    components: { Alert },
     methods: {
+        tourist() {
+            Auth.login({
+                username: "游客",
+                password: 123456,
+            })
+                .then((data) => {
+                    this.onAlert("登录成功");
+                    localStorage.setItem("token", data);
+                    this.$router.push("/");
+                })
+                .catch((data) => {
+                    this.onAlert("请输入正确的账号密码");
+                });
+        },
+        onAlert(name) {
+            this.AlertShow = true;
+            this.message = name;
+            setTimeout(() => {
+                this.AlertShow = false;
+            }, 1000);
+        },
+        noAlert() {
+            this.AlertShow = false;
+        },
         showRegister() {
             this.isShowLogin = false;
             this.isShowRegister = true;
@@ -88,11 +130,11 @@ export default {
             let result = this.checkUserName(this.login.username);
             let result2 = this.checkPassWord(this.login.password);
             if (!result.isValid) {
-                window.alert(this.error.usernameErr);
+                this.onAlert(this.error.usernameErr);
                 return;
             }
             if (!result2.isValid) {
-                window.alert(this.error.passwordErr);
+                this.onAlert(this.error.passwordErr);
                 return;
             }
             Auth.login({
@@ -100,33 +142,30 @@ export default {
                 password: this.login.password,
             })
                 .then((data) => {
-                    window.alert("登录成功");
-                    console.log(data);
+                    this.onAlert("登录成功");
                     localStorage.setItem("token", data);
                     this.$router.push("/");
                 })
                 .catch((data) => {
-                    console.log(data);
-                    window.alert("请输入正确的账号密码");
+                    this.onAlert("请输入正确的账号密码");
                 });
         },
         onRegister() {
             let result = this.checkUserName(this.register.username);
             let result2 = this.checkPassWord(this.register.password);
             if (!result.isValid) {
-                window.alert(this.error.usernameErr);
+                this.onAlert(this.error.usernameErr);
                 return;
             }
             if (!result2.isValid) {
-                window.alert(this.error.passwordErr);
+                this.onAlert(this.error.passwordErr);
                 return;
             }
             Auth.register({
                 username: this.register.username,
                 password: this.register.password,
             }).then((data) => {
-                console.log(data);
-                window.alert("注册成功");
+                this.onAlert("注册成功");
                 localStorage.setItem("token", data);
                 this.$router.push("/");
             });
@@ -153,13 +192,47 @@ export default {
     align-items: center;
     height: 100vh;
     width: 100vw;
+    > .text {
+        display: flex;
+        color: rgb(26, 25, 25);
+        margin-right: 50px;
+        padding-top: 20px;
+        line-height: 1;
+        > .big-title {
+            font-size: 160px;
+        }
+        > .left-title {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            justify-content: center;
+            > .down {
+                font-size: 120px;
+            }
+            > .small-title {
+                display: flex;
+                font-size: 30px;
+                > .online,
+                .simple {
+                    margin-left: 20px;
+                    margin-right: 10px;
+                }
+                > .online {
+                    color: #caae5b;
+                }
+                > .simple {
+                    color: #3f5f4e;
+                }
+            }
+        }
+    }
     > .form {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        min-height: 550px;
-        min-width: 400px;
+        min-height: 500px;
+        min-width: 380px;
         background: white;
         border-radius: 10px;
         box-shadow: 2px 2px 3px 3px gray;
@@ -174,7 +247,7 @@ export default {
             color: #010a0e;
             border-radius: 10px;
         }
-        > input::-webkit-input-placeholder {
+        > input {
             padding-left: 10px;
             font-size: 14px;
         }
@@ -182,24 +255,22 @@ export default {
             background: rgb(219, 218, 218);
         }
         > button {
-            background: #154453;
-            color: rgb(250, 250, 250);
+            background: #1c2e4e;
+            color: rgb(224, 221, 221);
         }
         > .logo {
             margin-bottom: 40px;
             > img {
-                width: 100px;
-                height: 100px;
+                width: 80px;
+                height: 80px;
             }
         }
         > nav {
             display: flex;
             margin-top: 50px;
-
-            > span,
-            a {
+            > span {
                 padding: 0 20px;
-                color: rgb(4, 4, 128);
+                color: rgb(3, 3, 87);
             }
         }
     }
