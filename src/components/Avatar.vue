@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         onSetting() {
-            console.log(this.sign);
+            this.$router.push("/setting");
         },
     },
 };
