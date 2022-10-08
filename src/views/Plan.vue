@@ -43,11 +43,14 @@
                         </div>
                     </div>
                     <div class="plan_h">
-                        <div class="title">历史记录</div>
+                        <div class="title" @click="setShowHistory">
+                            历史记录
+                        </div>
                         <div
                             class="history"
                             v-for="(content, index) in plan.historyContent"
                             :key="index"
+                            v-show="showHistory"
                         >
                             <div class="content">{{ content.content }}</div>
                             <div class="time">
@@ -81,6 +84,7 @@ export default {
                 yes: 0,
                 no: 0,
             },
+            showHistory: false,
         };
     },
     created() {
@@ -128,6 +132,9 @@ export default {
             .catch((data) => {});
     },
     methods: {
+        setShowHistory() {
+            this.showHistory = !this.showHistory;
+        },
         newPlan() {
             if (this.plan.newPlan === "") {
                 console.log("不能为空");
@@ -181,8 +188,6 @@ export default {
 <style lang="scss" scoped>
 .Plan {
     display: flex;
-    white-space: nowrap;
-
     > .wrapper {
         display: flex;
         justify-content: center;
@@ -228,6 +233,7 @@ export default {
                 flex-direction: column;
                 padding: 28px;
                 > .option {
+                    max-width: 330px;
                     margin-top: 100px;
                     padding: 20px;
                     border-radius: 10px;
@@ -251,7 +257,6 @@ export default {
                         display: flex;
                         margin-bottom: 10px;
                         font-size: 18px;
-
                         > .title {
                             margin-right: 20px;
                         }
@@ -278,6 +283,8 @@ export default {
                 border-radius: 10px;
                 box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
                 padding: 10px;
+
+                max-width: 600px;
                 > .title {
                     display: flex;
                     justify-content: center;
@@ -286,6 +293,8 @@ export default {
                     margin-top: 20px;
                     display: flex;
                     justify-content: space-between;
+                    flex-wrap: nowrap;
+                    white-space: nowrap;
                     align-items: center;
                     margin-bottom: 10px;
                     > .time {
