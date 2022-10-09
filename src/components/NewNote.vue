@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <Alert :message="message" v-show="AlertShow">
-            <template v-slot:yes><div @click="noAlert">提示</div></template>
+            <template v-slot:yes><div>提示</div></template>
         </Alert>
         <div class="wrappers" v-show="notebookShow">
             <div class="prompt">
@@ -14,7 +14,7 @@
                     />
                     <div class="echo">
                         <div class="yes" @click="createNotebook">确定</div>
-                        <div class="no" @click="notebookNoShow">取消</div>
+                        <div class="no" @click="notebookShow = false">取消</div>
                     </div>
                 </div>
             </div>
@@ -40,19 +40,19 @@
                             </option>
                         </select>
                         <div class="yes" @click="createNote">确定</div>
-                        <div class="no" @click="noteNoShow">取消</div>
+                        <div class="no" @click="noteShow = false">取消</div>
                     </div>
                 </div>
             </div>
         </div>
         <!--  -->
-        <div class="newNote" @click="NotebookIsShow">
+        <div class="newNote" @click="notebookShow = true">
             <svg>
                 <use xlink:href="#book" />
             </svg>
             <div class="txt">新建笔记本</div>
         </div>
-        <div class="newWord" @click="NoteIsShow">
+        <div class="newWord" @click="noteShow = true">
             <svg>
                 <use xlink:href="#word"></use>
             </svg>
@@ -103,27 +103,12 @@ export default {
     },
     components: { Alert },
     methods: {
-        NoteIsShow() {
-            this.noteShow = true;
-        },
-        NotebookIsShow() {
-            this.notebookShow = true;
-        },
-        notebookNoShow() {
-            this.notebookShow = false;
-        },
-        noteNoShow() {
-            this.noteShow = false;
-        },
         onAlert(name) {
             this.AlertShow = true;
             this.message = name;
             setTimeout(() => {
                 this.AlertShow = false;
             }, 1000);
-        },
-        noAlert() {
-            this.AlertShow = false;
         },
         createNotebook() {
             if (this.notebook === "") {

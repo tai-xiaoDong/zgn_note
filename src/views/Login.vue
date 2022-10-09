@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <Alert :message="message" v-show="AlertShow">
-            <template v-slot:yes><div @click="noAlert">提示</div></template>
+            <template v-slot:yes><div>提示</div></template>
         </Alert>
         <div class="text">
             <div class="big-title">Mark</div>
@@ -114,9 +114,6 @@ export default {
             setTimeout(() => {
                 this.AlertShow = false;
             }, 1000);
-        },
-        noAlert() {
-            this.AlertShow = false;
         },
         showRegister() {
             this.isShowLogin = false;

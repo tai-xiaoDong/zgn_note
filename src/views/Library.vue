@@ -15,7 +15,7 @@
                 <div class="opera">
                     <div
                         class="update"
-                        @click="notebookISShow"
+                        @click="notebookShow = true"
                         v-show="selected"
                     >
                         <svg>
@@ -41,7 +41,7 @@
                     v-model="newNotebook"
                 />
                 <div class="yes" @click="updateNotebook">确定</div>
-                <div class="no" @click="notebookNoShow">取消</div>
+                <div class="no" @click="notebookShow = false">取消</div>
             </div>
             <div class="newNote" v-show="noteShow">
                 <input
@@ -50,7 +50,7 @@
                     v-model="newNote"
                 />
                 <div class="yes" @click="updateNote">确定</div>
-                <div class="no" @click="noteNoShow">取消</div>
+                <div class="no" @click="noteShow = false">取消</div>
             </div>
 
             <div class="title">
@@ -267,16 +267,6 @@ export default {
                 .catch((data) => {
                     this.onAlert(data.msg);
                 });
-        },
-
-        notebookISShow() {
-            this.notebookShow = true;
-        },
-        notebookNoShow() {
-            this.notebookShow = false;
-        },
-        noteNoShow() {
-            this.noteShow = false;
         },
         noteIsShow(value) {
             this.noteName = value;

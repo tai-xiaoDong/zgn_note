@@ -65,7 +65,7 @@
                 <div @click="isLogout">确定</div>
             </template>
             <template v-slot:no>
-                <div @click="noLogout">取消</div>
+                <div @click="showMessage = false">取消</div>
             </template>
         </Confirm>
     </nav>
@@ -113,9 +113,6 @@ export default {
         isLogout() {
             localStorage.setItem("token", "");
             this.$router.push("/login");
-        },
-        noLogout() {
-            this.showMessage = false;
         },
     },
 };
