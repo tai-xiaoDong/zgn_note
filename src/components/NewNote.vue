@@ -145,7 +145,6 @@ export default {
             if (this.note === "" || this.selected === "") {
                 this.onAlert("文件夹名不能为空");
             } else {
-                console.log(this.note);
                 notes
                     .addNotes({ notebooks: this.selected, notes: this.note })
                     .then((data) => {

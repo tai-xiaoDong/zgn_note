@@ -180,7 +180,6 @@ export default {
         },
         setColor() {
             this.background = "background:" + this.color.toString();
-            console.log(this.background);
             let a = JSON.stringify(this.color);
             localStorage.setItem("color", a);
             this.showAlert = true;
@@ -238,7 +237,6 @@ export default {
                 if (this.password1 === this.password2) {
                     auth.setPassWord({ newPassword: this.password1 })
                         .then((data) => {
-                            console.log(data);
                             localStorage.setItem("token", "");
                             this.$router.push("/login");
                         })

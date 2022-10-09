@@ -46,11 +46,8 @@ export default {
                     }
                 }
                 this.plan.content = data;
-                console.log(this.plan.content);
             })
-            .catch((data) => {
-                console.log(data);
-            });
+            .catch((data) => {});
     },
     methods: {
         setShow() {

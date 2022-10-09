@@ -211,7 +211,6 @@ export default {
             });
         },
         deleteNotebook() {
-            console.log(this.selected);
             notebooks
                 .deleteNotebook({ notebooks: this.selected })
                 .then((data) => {

@@ -69,9 +69,7 @@ export default {
             .then((data) => {
                 this.notebooks = data;
             })
-            .catch((data) => {
-                console.log(data);
-            });
+            .catch((data) => {});
     },
     methods: {
         onAlert(name) {
@@ -82,7 +80,6 @@ export default {
             }, 1000);
         },
         recover(notebooks, notes, content) {
-            console.log(notebooks, notes, content);
             recycle
                 .recoverNotes({
                     notebooks: notebooks,
@@ -117,14 +114,12 @@ export default {
     display: flex;
     > .wrapper {
         display: flex;
-        /* border: 1px solid red; */
         margin-left: 50px;
         padding: 20px;
         flex-direction: column;
         > .title {
             margin-top: 50px;
             margin-bottom: 50px;
-            /* border: 1px solid red; */
         }
         > .content {
             display: flex;
