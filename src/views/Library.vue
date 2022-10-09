@@ -1,7 +1,7 @@
 <template>
     <div class="Library">
         <Alert :message="message" v-show="AlertShow">
-            <template v-slot:yes><div @click="noAlert">确认</div></template>
+            <template v-slot:yes><div>提示</div></template>
         </Alert>
         <navBar />
         <div class="wrapper">
@@ -22,7 +22,11 @@
                             <use xlink:href="#edit" />
                         </svg>
                     </div>
-                    <div class="delete" v-show="selected">
+                    <div
+                        class="delete"
+                        v-show="selected"
+                        @click="deleteNotebook"
+                    >
                         <svg>
                             <use xlink:href="#delete" />
                         </svg>
@@ -74,7 +78,7 @@
                             <use xlink:href="#edit" />
                         </svg>
                     </div>
-                    <div class="delete" @click="onDelete">
+                    <div class="delete" @click="delNotes">
                         <svg>
                             <use xlink:href="#delete" />
                         </svg>
@@ -138,9 +142,7 @@ export default {
     created() {
         //检查是否登录
         auth.getInfo()
-            .then((data) => {
-                console.log(data);
-            })
+            .then((data) => {})
             .catch((data) => {
                 this.$router.push("/login");
             });
@@ -208,8 +210,33 @@ export default {
                 params: { notebook: this.selected, note: this.noteName },
             });
         },
-        onDelete() {
-            console.log("删除");
+        deleteNotebook() {
+            console.log(this.selected);
+            notebooks
+                .deleteNotebook({ notebooks: this.selected })
+                .then((data) => {
+                    this.onAlert(data.msg);
+                    location.reload();
+                })
+                .catch((data) => {
+                    this.onAlert(data.msg);
+                });
+        },
+        delNotes() {
+            notes
+                .deleteNotes({
+                    notebooks: this.selected,
+                    notes: this.noteName,
+                    content: this.content,
+                })
+                .then((data) => {
+                    this.onAlert(data.msg);
+                    location.reload();
+                })
+                .catch((data) => {
+                    this.onAlert(data.msg);
+                    location.reload();
+                });
         },
         // 更新笔记本名字
         updateNotebook() {
@@ -265,9 +292,9 @@ export default {
         onAlert(name) {
             this.AlertShow = true;
             this.message = name;
-        },
-        noAlert() {
-            this.AlertShow = false;
+            setTimeout(() => {
+                this.AlertShow = false;
+            }, 1000);
         },
     },
 };
