@@ -27,7 +27,7 @@ export default {
     },
     deleteNotes(notebooksName) {
         return (
-            request(url.ADD, 'post', notebooksName)
+            request(url.DEL, 'post', notebooksName)
         )
     },
 
