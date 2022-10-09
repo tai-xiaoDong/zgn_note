@@ -1,5 +1,8 @@
 <template>
     <div class="Plan">
+        <Alert :message="message" v-show="AlertShow">
+            <template v-slot:yes><div>提示</div></template>
+        </Alert>
         <NavBar />
         <div class="wrapper">
             <div class="wrap">
@@ -72,6 +75,7 @@ import auth from "@/apis/auth";
 import c from "@/assets/icons/setting/home.svg";
 import plan from "@/apis/plan";
 import dayjs from "dayjs";
+import Alert from "@/components/pop-ups/Alert.vue";
 
 export default {
     name: "Plan",
@@ -85,8 +89,11 @@ export default {
                 no: 0,
             },
             showHistory: false,
+            message: "",
+            AlertShow: false,
         };
     },
+    components: { Alert },
     created() {
         //检查是否登录
         auth.getInfo()
@@ -132,12 +139,19 @@ export default {
             .catch((data) => {});
     },
     methods: {
+        onAlert(name) {
+            this.AlertShow = true;
+            this.message = name;
+            setTimeout(() => {
+                this.AlertShow = false;
+            }, 1000);
+        },
         setShowHistory() {
             this.showHistory = !this.showHistory;
         },
         newPlan() {
             if (this.plan.newPlan === "") {
-                console.log("不能为空");
+                this.onAlert("不能为空");
             } else {
                 plan.createPlan({ content: this.plan.newPlan })
                     .then((data) => {
@@ -190,23 +204,21 @@ export default {
     display: flex;
     > .wrapper {
         display: flex;
-        justify-content: center;
         flex-grow: 1;
         > .wrap {
             display: flex;
             > .myPlan {
-                margin-left: 100px;
+                margin-left: 50px;
                 margin-right: 50px;
                 overflow: hidden;
                 .mainWrap {
                     display: flex;
                     flex-direction: column;
-                    padding: 10px;
                     min-width: 700px;
+                    padding: 10px;
                     .title {
                         margin-top: 50px;
                         display: flex;
-                        justify-content: center;
                         padding: 10px;
                         margin-bottom: 20px;
                     }
