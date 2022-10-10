@@ -8,6 +8,11 @@
             <div class="title">
                 <h2>回收站</h2>
             </div>
+            <div class="photo" v-show="photo">
+                <svg v-show="photo">
+                    <use xlink:href="#null" />
+                </svg>
+            </div>
             <div
                 class="content"
                 v-for="(notebook, index) in notebooks"
@@ -45,11 +50,13 @@ import auth from "@/apis/auth";
 import recycle from "@/apis/recycle";
 import Alert from "@/components/pop-ups/Alert.vue";
 import notebooks from "@/apis/notebooks";
+import a from "@/assets/icons/recycle/null.svg";
 
 export default {
     name: "Recycle",
     data() {
         return {
+            photo: false,
             notebooks: [],
             AlertShow: false,
             message: "",
@@ -68,9 +75,11 @@ export default {
             .getAll()
             .then((data) => {
                 this.notebooks = data;
-                console.log(this.notebooks);
             })
             .catch((data) => {});
+        if (this.notebooks === []) {
+            this.photo = true;
+        }
     },
     methods: {
         onAlert(name) {
@@ -109,15 +118,22 @@ export default {
                 });
         },
         del(notebooks, notes) {
+            let a = {
+                notebooks: notebooks,
+                notes: notes,
+            };
             recycle
                 .delete({ notebooks: notebooks, notes: notes })
                 .then((data) => {
                     this.onAlert(data.msg);
-                    this.notebooks = this.notebooks.filter(
-                        (items) =>
-                            items.notebooks !== notebooks &&
-                            items.notes !== notes
-                    );
+                    for (let i = 0; i < this.notebooks.length; i++) {
+                        if (
+                            a.notebooks === this.notebooks[i].notebooks &&
+                            a.notes === this.notebooks[i].notes
+                        ) {
+                            this.notebooks.splice(i, 1);
+                        }
+                    }
                 })
                 .catch((data) => {
                     this.onAlert(data.msg + "请刷新页面");
@@ -138,6 +154,14 @@ export default {
         > .title {
             margin-top: 50px;
             margin-bottom: 50px;
+        }
+        > .photo {
+            margin-left: 200px;
+            margin-top: 100px;
+            > svg {
+                width: 400px;
+                height: 200px;
+            }
         }
         > .content {
             display: flex;
