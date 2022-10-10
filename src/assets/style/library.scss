@@ -200,5 +200,114 @@
         padding-top: 20px;
         margin-right: 20px;
         margin-left: 20px;
+
+        >.NewNote {
+            .wrapper {
+                display: flex;
+                font-size: 16px;
+                max-width: 250px;
+                border-radius: 10px;
+                box-shadow: 0px 2px 4px 0px rgb(196, 194, 194);
+                margin-bottom: 30px;
+
+                >.newNote,
+                .newWord {
+                    display: flex;
+                    flex-direction: row;
+                    font-size: 14px;
+                    margin: 10px;
+                    padding-bottom: 5px;
+                    padding-top: 5px;
+
+                    >svg {
+                        width: 25px;
+                        height: 25px;
+                        margin: 5px;
+                        fill: rgb(59, 85, 71);
+                    }
+
+                    >.txt {
+                        margin-bottom: 5px;
+                        margin-top: 10px;
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    >.wrappers {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        >.prompt {
+            width: 500px;
+            height: 110px;
+            padding: 10px;
+            position: fixed;
+            left: 40%;
+            top: 40%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 4px 0px rgb(196, 194, 194);
+
+            .wraps {
+                >.content {
+                    padding: 10px;
+                    margin-left: 20px;
+                    border: none;
+                    width: 400px;
+                }
+
+                >.content {
+                    padding-left: 10px;
+                }
+
+                >.echo {
+                    display: flex;
+                    justify-content: right;
+                    margin-top: 15px;
+
+                    >.select {
+                        border-radius: 10px;
+                        box-shadow: 1px 1px 1px 1px rgb(201, 199, 199);
+                        width: 120px;
+                        border: none;
+                        font-size: 14px;
+                        background: rgb(59, 85, 71);
+                        color: rgb(223, 217, 217);
+                        padding: 5px;
+
+                        >option {
+                            background: rgb(223, 217, 217);
+                            color: black;
+                        }
+                    }
+
+                    >.yes,
+                    .no {
+                        margin-right: 10px;
+                        padding: 10px;
+                        padding-top: 5px;
+                        padding-bottom: 5px;
+                        font-size: 14px;
+                        border-radius: 10px;
+                        box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
+                    }
+
+                    >.yes {
+                        background: rgb(59, 85, 71);
+                        color: rgb(223, 217, 217);
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
     }
 }

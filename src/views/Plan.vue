@@ -178,9 +178,12 @@ export default {
                 });
         },
         deletePlanh(value) {
+            let a = value;
             plan.deletePlanh({ content: value })
                 .then((data) => {
-                    location.reload();
+                    this.plan.historyContent = this.plan.historyContent.filter(
+                        (items) => items.content !== a
+                    );
                 })
                 .catch((data) => {
                     console.log(data);

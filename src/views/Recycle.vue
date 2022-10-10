@@ -50,7 +50,7 @@ export default {
     name: "Recycle",
     data() {
         return {
-            notebooks: "",
+            notebooks: [],
             AlertShow: false,
             message: "",
         };
@@ -68,6 +68,7 @@ export default {
             .getAll()
             .then((data) => {
                 this.notebooks = data;
+                console.log(this.notebooks);
             })
             .catch((data) => {});
     },
@@ -80,6 +81,11 @@ export default {
             }, 1000);
         },
         recover(notebooks, notes, content) {
+            let a = {
+                notebooks: notebooks,
+                notes: notes,
+                content: content,
+            };
             recycle
                 .recoverNotes({
                     notebooks: notebooks,
@@ -88,10 +94,18 @@ export default {
                 })
                 .then((data) => {
                     this.onAlert(data.msg);
-                    location.reload();
+                    for (let i = 0; i < this.notebooks.length; i++) {
+                        if (
+                            a.notebooks === this.notebooks[i].notebooks &&
+                            a.notes === this.notebooks[i].notes &&
+                            a.content === this.notebooks[i].content
+                        ) {
+                            this.notebooks.splice(i, 1);
+                        }
+                    }
                 })
                 .catch((data) => {
-                    this.onAlert(data.msg);
+                    this.onAlert(data.msg + "请刷新页面");
                 });
         },
         del(notebooks, notes) {
@@ -99,10 +113,14 @@ export default {
                 .delete({ notebooks: notebooks, notes: notes })
                 .then((data) => {
                     this.onAlert(data.msg);
-                    location.reload();
+                    this.notebooks = this.notebooks.filter(
+                        (items) =>
+                            items.notebooks !== notebooks &&
+                            items.notes !== notes
+                    );
                 })
                 .catch((data) => {
-                    this.onAlert(data.msg);
+                    this.onAlert(data.msg + "请刷新页面");
                 });
         },
     },

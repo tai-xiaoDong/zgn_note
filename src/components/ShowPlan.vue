@@ -32,7 +32,7 @@ export default {
             plan: {
                 content: "",
             },
-            show: false,
+            show: true,
         };
     },
     created() {

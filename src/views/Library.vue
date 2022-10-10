@@ -3,6 +3,55 @@
         <Alert :message="message" v-show="AlertShow">
             <template v-slot:yes><div>提示</div></template>
         </Alert>
+        <div class="wrappers" v-show="addNewNote.notebookShow">
+            <div class="prompt">
+                <div class="wraps">
+                    <input
+                        type="text"
+                        placeholder="请在此输入文件夹名"
+                        class="content"
+                        v-model="addNewNote.notebook"
+                    />
+                    <div class="echo">
+                        <div class="yes" @click="createNotebook">确定</div>
+                        <div
+                            class="no"
+                            @click="addNewNote.notebookShow = false"
+                        >
+                            取消
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrappers" v-show="addNewNote.noteShow">
+            <div class="prompt">
+                <div class="wraps">
+                    <input
+                        type="text"
+                        placeholder="请在此输入文件名"
+                        class="content"
+                        v-model="addNewNote.note"
+                    />
+
+                    <div class="echo">
+                        <select v-model="addNewNote.selected" class="select">
+                            <option disabled value="">请选择笔记本</option>
+                            <option
+                                v-for="(notebook, index) in notebooks"
+                                :key="index"
+                            >
+                                {{ notebook }}
+                            </option>
+                        </select>
+                        <div class="yes" @click="createNote">确定</div>
+                        <div class="no" @click="addNewNote.noteShow = false">
+                            取消
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <navBar />
         <div class="wrapper">
             <div class="wrap">
@@ -103,14 +152,31 @@
         </main>
         <div class="user">
             <Avatar />
-            <NewNote />
+            <div class="NewNote">
+                <div class="wrapper">
+                    <div
+                        class="newNote"
+                        @click="addNewNote.notebookShow = true"
+                    >
+                        <svg>
+                            <use xlink:href="#book" />
+                        </svg>
+                        <div class="txt">新建笔记本</div>
+                    </div>
+                    <div class="newWord" @click="addNewNote.noteShow = true">
+                        <svg>
+                            <use xlink:href="#word"></use>
+                        </svg>
+                        <div class="txt">新建笔记</div>
+                    </div>
+                </div>
+            </div>
             <ShowPlan />
         </div>
     </div>
 </template>
 
 <script>
-import NewNote from "../components/NewNote.vue";
 import ShowPlan from "@/components/ShowPlan.vue";
 import Avatar from "@/components/Avatar.vue";
 import a from "@/assets/icons/library/delete.svg";
@@ -121,19 +187,20 @@ import notes from "@/apis/notes";
 import c from "@/assets/icons/library/student.svg";
 import dayjs from "dayjs";
 import Alert from "@/components/pop-ups/Alert.vue";
-import ShowPlanVue from "@/components/ShowPlan.vue";
+import d from "@/assets/icons/newNote/book.svg";
+import e from "@/assets/icons/newNote/word.svg";
 
 export default {
     name: "Library",
     data() {
         return {
             selected: "", // 当前笔记本id
-            notebooks: false, //笔记本列表
+            notebooks: [], //笔记本列表
             newNotebook: "", // 新笔记本id
             notebookShow: false, // 控制组件显示
 
             noteName: "",
-            notes: false,
+            notes: [],
             newNote: "",
             noteShow: false,
             content: "",
@@ -142,9 +209,17 @@ export default {
             selectNotes: [],
             message: "",
             AlertShow: false,
+
+            addNewNote: {
+                noteShow: false,
+                notebookShow: false,
+                notebook: "",
+                note: "",
+                selected: "",
+            },
         };
     },
-    components: { NewNote, Avatar, Alert, ShowPlan },
+    components: { Avatar, Alert, ShowPlan },
 
     created() {
         //检查是否登录
@@ -153,7 +228,7 @@ export default {
             .catch((data) => {
                 this.$router.push("/login");
             });
-        // 请求所有笔记本
+        //请求所有笔记本;
         notebooks
             .getAll()
             .then((data) => {
@@ -170,6 +245,7 @@ export default {
             .catch((data) => {
                 console.log(data);
             });
+        this.$store.dispatch("getNotebooks");
     },
     // 请求笔记
     watch: {
@@ -217,12 +293,58 @@ export default {
                 params: { notebook: this.selected, note: this.noteName },
             });
         },
+        createNotebook() {
+            if (this.addNewNote.notebook === "") {
+                this.onAlert("文件夹名不能为空");
+            } else {
+                notebooks
+                    .addNotebook({ notebooks: this.addNewNote.notebook })
+                    .then((data) => {
+                        this.notebooks.push(data.notebooks.notebooks);
+                        this.selected = data.notebooks.notebooks;
+                        this.onAlert("创建成功");
+                    })
+                    .catch((data) => {
+                        this.onAlert(data.msg);
+                    });
+                this.addNewNote.notebook = "";
+                this.addNewNote.notebookShow = false;
+            }
+        },
+        createNote() {
+            if (
+                this.addNewNote.note === "" ||
+                this.addNewNote.selected === ""
+            ) {
+                this.onAlert("文件夹名不能为空");
+            } else {
+                notes
+                    .addNotes({
+                        notebooks: this.addNewNote.selected,
+                        notes: this.addNewNote.note,
+                    })
+                    .then((data) => {
+                        this.selected = this.addNewNote.selected;
+                        this.notes.push(data[0].notes);
+                        this.onAlert("创建成功");
+                    })
+                    .catch((data) => {
+                        this.onAlert(data.msg);
+                    });
+                this.addNewNote.note = "";
+                this.addNewNote.noteShow = false;
+            }
+        },
         deleteNotebook() {
             notebooks
                 .deleteNotebook({ notebooks: this.selected })
                 .then((data) => {
                     this.onAlert(data.msg);
-                    location.reload();
+                    this.notebooks = this.notebooks.filter(
+                        (items) => items !== this.selected
+                    );
+                    this.selected = this.notebooks[0];
+                    this.onAlert("删除成功");
                 })
                 .catch((data) => {
                     this.onAlert(data.msg);
@@ -237,7 +359,18 @@ export default {
                 })
                 .then((data) => {
                     this.onAlert(data.msg);
-                    location.reload();
+                    this.notes = this.notes.filter(
+                        (items) => items !== this.noteName
+                    );
+                    console.log(this.notes);
+                    this.time = false;
+                    if (this.notes[0] === undefined) {
+                        this.notebooks = this.notebooks.filter(
+                            (items) => items !== this.selected
+                        );
+                        this.selected = this.notebooks[0];
+                    }
+                    this.onAlert("删除成功");
                 })
                 .catch((data) => {
                     this.onAlert(data.msg);
@@ -253,7 +386,12 @@ export default {
             notebooks
                 .updateNotebook(notebookName)
                 .then((data) => {
-                    location.reload();
+                    this.notebooks = this.notebooks.filter(
+                        (items) => items === this.selected
+                    );
+                    this.notebooks.push(this.newNotebook);
+                    this.selected = this.newNotebook;
+                    this.onAlert("更新成功");
                 })
                 .catch((data) => {
                     this.onAlert(data.msg);
@@ -269,7 +407,12 @@ export default {
             notes
                 .updateNotes(noteName)
                 .then((data) => {
-                    location.reload();
+                    this.notes.push(this.newNote);
+                    this.notes = this.notes.filter(
+                        (items) => items !== this.noteName
+                    );
+                    this.noteName = this.newNote;
+                    this.onAlert("更新成功");
                 })
                 .catch((data) => {
                     this.onAlert(data.msg);
