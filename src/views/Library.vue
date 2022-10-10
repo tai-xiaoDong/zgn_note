@@ -251,6 +251,7 @@ export default {
     watch: {
         selected: function () {
             this.getNotes(this.selected);
+            this.content = "";
         },
     },
     methods: {
@@ -302,6 +303,7 @@ export default {
                     .then((data) => {
                         this.notebooks.push(data.notebooks.notebooks);
                         this.selected = data.notebooks.notebooks;
+                        this.content = "";
                         this.onAlert("创建成功");
                     })
                     .catch((data) => {
@@ -362,8 +364,8 @@ export default {
                     this.notes = this.notes.filter(
                         (items) => items !== this.noteName
                     );
-                    console.log(this.notes);
                     this.time = false;
+                    this.content = false;
                     if (this.notes[0] === undefined) {
                         this.notebooks = this.notebooks.filter(
                             (items) => items !== this.selected
@@ -387,7 +389,7 @@ export default {
                 .updateNotebook(notebookName)
                 .then((data) => {
                     this.notebooks = this.notebooks.filter(
-                        (items) => items === this.selected
+                        (items) => items !== this.selected
                     );
                     this.notebooks.push(this.newNotebook);
                     this.selected = this.newNotebook;

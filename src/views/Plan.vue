@@ -192,7 +192,8 @@ export default {
         again() {
             auth.deletePlan()
                 .then((data) => {
-                    location.reload();
+                    this.plan.yes = 0;
+                    this.plan.no = 0;
                 })
                 .catch((data) => {
                     console.log(data);
