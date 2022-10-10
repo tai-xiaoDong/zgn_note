@@ -126,7 +126,7 @@ export default {
     justify-content: center;
     color: rgb(42, 49, 59);
     > .navbar {
-        height: 100vh;
+        height: 1000vh;
         > .selected {
             background: rgb(59, 85, 71);
             border-radius: 10px;

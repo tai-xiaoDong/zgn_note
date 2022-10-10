@@ -17,6 +17,7 @@
                         class="update"
                         @click="notebookShow = true"
                         v-show="selected"
+                        title="修改笔记本名"
                     >
                         <svg>
                             <use xlink:href="#edit" />
@@ -26,6 +27,7 @@
                         class="delete"
                         v-show="selected"
                         @click="deleteNotebook"
+                        title="删除笔记本"
                     >
                         <svg>
                             <use xlink:href="#delete" />
@@ -73,12 +75,12 @@
             <header v-show="time">
                 <div class="date">{{ time }}</div>
                 <div class="control">
-                    <div class="edit" @click="toEdit">
+                    <div class="edit" @click="toEdit" title="编辑笔记">
                         <svg>
                             <use xlink:href="#edit" />
                         </svg>
                     </div>
-                    <div class="delete" @click="delNotes">
+                    <div class="delete" @click="delNotes" title="删除笔记">
                         <svg>
                             <use xlink:href="#delete" />
                         </svg>
@@ -86,7 +88,12 @@
                 </div>
             </header>
             <div>
-                <div class="content">{{ content }}</div>
+                <textarea
+                    class="isMarkdown"
+                    v-show="content"
+                    v-model="content"
+                    readonly
+                ></textarea>
             </div>
             <div class="student" v-show="!time">
                 <svg>

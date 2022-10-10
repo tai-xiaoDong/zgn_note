@@ -4,14 +4,15 @@
             <template v-slot:yes><div>提示</div></template>
         </Alert>
         <NavBar />
+
         <div class="wrapper">
             <div class="wrap">
                 <div class="myPlan">
                     <div class="mainWrap">
                         <h2 class="title">我的计划</h2>
                         <main
-                            v-for="(content, index) in plan.content"
-                            :key="index"
+                            v-for="(content, id) in this.plan.content"
+                            :key="id"
                         >
                             <div class="content">{{ content.content }}</div>
                             <div class="time">
@@ -82,12 +83,13 @@ export default {
     data() {
         return {
             plan: {
-                historyContent: "",
-                content: "",
+                historyContent: [],
+                content: [],
                 newPlan: "",
                 yes: 0,
                 no: 0,
             },
+            TEXT: "",
             showHistory: false,
             message: "",
             AlertShow: false,
@@ -155,14 +157,11 @@ export default {
             } else {
                 plan.createPlan({ content: this.plan.newPlan })
                     .then((data) => {
-                        for (let i = 0; i < data.length; i++) {
-                            if (data[i].content !== null) {
-                                data[i].createdAt = dayjs(
-                                    data[i].createdAt
-                                ).format("YYYY-MM-DD");
-                            }
-                        }
-                        location.reload();
+                        data[0].createdAt = dayjs(data[0].createdAt).format(
+                            "YYYY-MM-DD"
+                        );
+                        this.plan.content.push(data[0]);
+                        this.plan.newPlan = "";
                     })
                     .catch((data) => {
                         console.log(data);

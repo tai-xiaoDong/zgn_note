@@ -6,6 +6,7 @@ const url = {
     SET: '/update/notes',
     DEL: '/delete/notes',
     read: '/content',
+    PUT: '/content'
 }
 
 export default {
@@ -36,5 +37,10 @@ export default {
             request(url.read, 'post', content)
         )
     },
+    setContent(content) {
+        return (
+            request(url.PUT, 'patch', content)
+        )
+    }
 
 }
