@@ -105,7 +105,7 @@
                 <div @click="showMessage = false">取消</div>
             </template>
         </Confirm>
-        <Alert :message="message" v-show="showAlert">
+        <Alert :message="message" v-show="AlertShow">
             <template v-slot:yes>
                 <div @click="showAlert = false">提示</div>
             </template>
@@ -137,7 +137,7 @@ export default {
             password2: "",
             message: "",
             showMessage: false,
-            showAlert: false,
+            AlertShow: false,
             background: "",
             selected: "",
 
@@ -162,31 +162,31 @@ export default {
         } else {
             this.user.sign = localStorage.getItem("sign");
         }
-        if (localStorage.getItem("color") === null) {
-            this.background = "background:rgb(105, 28, 28)";
+        if (localStorage.getItem("color") !== null) {
+            this.background =
+                "background:" + JSON.parse(localStorage.getItem("color"));
         } else {
-            this.background = localStorage.getItem("color").toString();
+            this.background = "background:rgb(105, 28, 28)";
         }
     },
     methods: {
+        onAlert(name) {
+            this.AlertShow = true;
+            this.message = name;
+            setTimeout(() => {
+                this.AlertShow = false;
+            }, 1000);
+        },
         setNav() {
             let a = JSON.stringify(this.selected);
             localStorage.setItem("Nav", a);
-            this.showAlert = true;
-            this.message = "设置成功";
-            setTimeout(() => {
-                this.showAlert = false;
-            }, 1000);
+            this.onAlert("设置成功");
         },
         setColor() {
             this.background = "background:" + this.color.toString();
             let a = JSON.stringify(this.color);
             localStorage.setItem("color", a);
-            this.showAlert = true;
-            this.message = "设置成功";
-            setTimeout(() => {
-                this.showAlert = false;
-            }, 1000);
+            this.onAlert("设置成功");
         },
         logout() {
             this.showMessage = true;
@@ -198,11 +198,7 @@ export default {
         },
         setSign() {
             localStorage.setItem("sign", this.user.sign);
-            this.showAlert = true;
-            this.message = "设置成功";
-            setTimeout(() => {
-                this.showAlert = false;
-            }, 1000);
+            this.onAlert("设置成功");
         },
         userIsShow() {
             this.userShow = true;
@@ -227,28 +223,21 @@ export default {
         setPassword() {
             let result = this.checkPassWord(this.password1);
             if (!result.isValid) {
-                this.showAlert = true;
-                this.message = "密码必须为6-16位";
-                setTimeout(() => {
-                    this.showAlert = false;
-                }, 1000);
+                this.onAlert("密码必须为6-16位");
                 return;
             } else {
                 if (this.password1 === this.password2) {
                     auth.setPassWord({ newPassword: this.password1 })
                         .then((data) => {
                             localStorage.setItem("token", "");
+                            this.onAlert("修改成功，请重新登陆");
                             this.$router.push("/login");
                         })
                         .catch((data) => {
                             console.log(data);
                         });
                 } else {
-                    this.showAlert = true;
-                    this.message = "两次密码不相同！";
-                    setTimeout(() => {
-                        this.showAlert = false;
-                    }, 1000);
+                    this.onAlert("两次密码不相同！");
                 }
             }
         },

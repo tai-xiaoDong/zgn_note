@@ -18,8 +18,15 @@
                 v-for="(notebook, index) in notebooks"
                 :key="index"
             >
-                <div class="notebooks">所属笔记本:{{ notebook.notebooks }}</div>
-                <div class="notes">笔记名:{{ notebook.notes }}</div>
+                <div class="notebooks">
+                    <div>所属笔记本:</div>
+                    <div>
+                        <strong>{{ notebook.notebooks }}</strong>
+                    </div>
+                </div>
+                <div class="notes">
+                    <div>{{ notebook.notes }}</div>
+                </div>
                 <div class="txt" v-if="false">内容{{ notebook.content }}</div>
                 <div>
                     <button
@@ -146,6 +153,8 @@ export default {
 <style lang="scss" scoped>
 .recycle {
     display: flex;
+    color: rgb(39, 38, 38);
+    height: 100vh;
     > .wrapper {
         display: flex;
         margin-left: 50px;
@@ -174,7 +183,11 @@ export default {
             border-radius: 10px;
             box-shadow: 1px 2px 4px 2px rgb(196, 194, 194);
             > .notebooks {
+                display: flex;
                 margin-right: 50px;
+                > div {
+                    margin-right: 20px;
+                }
             }
             > .notes {
                 margin-right: 50px;
@@ -187,14 +200,13 @@ button {
     padding-left: 10px;
     padding-right: 10px;
     font-size: 14px;
-    background: rgb(17, 65, 39);
-    color: rgb(223, 217, 217);
+    background-color: rgba(21, 68, 3, 0.7);
+    color: rgb(245, 241, 237);
     border-radius: 10px;
-    box-shadow: 1px 1px 2px 1px rgb(150, 147, 147);
     border: none;
     margin-left: 10px;
 }
 .delete {
-    background: rgb(80, 9, 9);
+    background-color: rgba(99, 5, 1, 0.7);
 }
 </style>

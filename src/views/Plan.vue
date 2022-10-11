@@ -29,23 +29,30 @@
                     </div>
                 </div>
                 <aside>
+                    <div class="print">
+                        <input type="text" v-model="plan.newPlan" />
+                        <button @click="newPlan">新建计划</button>
+                    </div>
                     <div class="option">
                         <div class="again" @click="again">
                             <div>重新计数</div>
                         </div>
-                        <div class="yes">
-                            <div class="title">守约次数</div>
-                            <div class="number">{{ plan.yes }}</div>
-                        </div>
-                        <div class="no">
-                            <div class="title">未守约次数</div>
-                            <div class="number">{{ plan.no }}</div>
-                        </div>
-                        <div class="print">
-                            <input type="text" v-model="plan.newPlan" />
-                            <button @click="newPlan">新建计划</button>
+                        <div class="numbers">
+                            <div class="yes">
+                                <div class="title">守约次数</div>
+                                <div class="number">
+                                    <strong>{{ plan.yes }}</strong>
+                                </div>
+                            </div>
+                            <div class="no">
+                                <div class="title">未守约次数</div>
+                                <div class="number">
+                                    <strong>{{ plan.no }}</strong>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="plan_h">
                         <div class="title" @click="setShowHistory">
                             历史记录
@@ -205,6 +212,7 @@ export default {
 <style lang="scss" scoped>
 .Plan {
     display: flex;
+    height: 100vh;
     > .wrapper {
         display: flex;
         flex-grow: 1;
@@ -248,46 +256,56 @@ export default {
                 flex-direction: column;
                 padding: 28px;
                 > .option {
+                    display: flex;
+                    flex-direction: row-reverse;
                     max-width: 330px;
-                    margin-top: 100px;
-                    padding: 20px;
+
+                    padding: 10px;
+                    justify-content: center;
                     border-radius: 10px;
                     box-shadow: 1px 1px 2px 2px rgb(201, 199, 199);
                     > .again {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        margin-bottom: 20px;
                         > div {
                             padding: 5px;
                             border-radius: 5px;
-                            background: rgb(214, 211, 211);
+                            background: rgba(214, 211, 211, 0.5);
+                            box-shadow: 1px 1px 1px 1px rgb(201, 199, 199);
                         }
                     }
-                    > .print {
-                        display: flex;
-                        justify-content: center;
-                    }
-                    > .no {
-                        display: flex;
-                        margin-bottom: 10px;
-                        font-size: 18px;
-                        > .title {
-                            margin-right: 20px;
+                    > .numbers {
+                        margin-right: 36px;
+                        > .no {
+                            display: flex;
+                            > .title {
+                                margin-right: 20px;
+                            }
+                            > .number {
+                                color: red;
+                                font-size: 18px;
+                            }
                         }
-                        > .number {
-                            color: red;
-                        }
-                    }
-                    > .yes {
-                        display: flex;
-                        margin-bottom: 10px;
-                        font-size: 18px;
-                        .title {
-                            margin-right: 36px;
+                        > .yes {
+                            display: flex;
+                            margin-bottom: 10px;
+
+                            .title {
+                                margin-right: 36px;
+                            }
+                            .number {
+                                font-size: 18px;
+                            }
                         }
                     }
                 }
+            }
+            .print {
+                margin-top: 100px;
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: center;
             }
             .plan_h {
                 display: flex;
@@ -325,16 +343,16 @@ button {
     padding-left: 10px;
     padding-right: 10px;
     font-size: 14px;
-    background: rgb(59, 85, 71);
+    background: rgba(59, 85, 71, 1);
     color: rgb(223, 217, 217);
     border-radius: 10px;
-    box-shadow: 1px 0px 0px 1px rgb(150, 147, 147);
+    box-shadow: 1px 1px 2px 1px rgb(150, 147, 147);
     border: none;
     margin-left: 10px;
 }
 input {
     border: none;
-    border: 1px solid rgb(184, 180, 180);
+    box-shadow: 1px 1px 2px 1px rgb(201, 199, 199);
     background: #f3f3f3;
     padding-left: 5px;
 }

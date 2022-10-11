@@ -304,6 +304,7 @@ export default {
                         this.notebooks.push(data.notebooks.notebooks);
                         this.selected = data.notebooks.notebooks;
                         this.content = "";
+                        this.time = false;
                         this.onAlert("创建成功");
                     })
                     .catch((data) => {
@@ -328,6 +329,8 @@ export default {
                     .then((data) => {
                         this.selected = this.addNewNote.selected;
                         this.notes.push(data[0].notes);
+                        this.content = "";
+                        this.time = false;
                         this.onAlert("创建成功");
                     })
                     .catch((data) => {
@@ -346,6 +349,8 @@ export default {
                         (items) => items !== this.selected
                     );
                     this.selected = this.notebooks[0];
+                    this.content = "";
+                    this.time = false;
                     this.onAlert("删除成功");
                 })
                 .catch((data) => {
@@ -372,6 +377,8 @@ export default {
                         );
                         this.selected = this.notebooks[0];
                     }
+                    this.content = "";
+                    this.time = false;
                     this.onAlert("删除成功");
                 })
                 .catch((data) => {
