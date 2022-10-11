@@ -151,7 +151,11 @@ export default {
                 notes: this.$route.params.note,
             })
             .then((data) => {
-                this.content = data[0].content;
+                if (data[0].content === null) {
+                    this.content = "";
+                } else {
+                    this.content = data[0].content;
+                }
             });
     },
     methods: {
@@ -171,7 +175,6 @@ export default {
                     notebooks: this.$route.params.notebook,
                 })
                 .then((data) => {
-                    console.log(data);
                     data[0].updatedAt = dayjs(data[0].updatedAt).format(
                         "YYYY-MM-DD:HH:mm:s"
                     );
