@@ -26,7 +26,7 @@ function request(url, type = 'GET', data = {}) {
             option.params = data
         } else {
             option.data = data
-        };
+        }
 
         //发送请求
         axios(option).then(res => {
@@ -37,7 +37,7 @@ function request(url, type = 'GET', data = {}) {
             }
         }).catch((err) => {
             reject(
-                { mag: '网络异常' }
+                console.log(err)
             )
 
         })
