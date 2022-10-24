@@ -4,7 +4,7 @@ import axios from 'axios';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // 服务器地址，每次路径前会自动加上这个地址
 // axios.defaults.baseURL = "http://note-server.hunger-valley.com";
-axios.defaults.baseURL = "http://43.140.205.84:7001";
+axios.defaults.baseURL = "http://43.140.205.84:80";
 // axios.defaults.withCredentials = true;
 
 
